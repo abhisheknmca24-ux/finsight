@@ -56,6 +56,18 @@ function Prediction() {
     );
   }
 
+  if (score.noData) {
+    return (
+      <div className="page-wrapper">
+        <div className="empty-state">
+          <div className="empty-state-icon">📉</div>
+          <div className="empty-state-title">No financial data yet</div>
+          <div className="empty-state-desc">Upload a statement or add transactions to generate your health score and AI predictions.</div>
+        </div>
+      </div>
+    );
+  }
+
   const statusColorMap = { green: "var(--income)", yellow: "var(--investment)", red: "var(--expense)" };
   const statusColor = statusColorMap[score.statusColor] ?? "var(--brand-light)";
 

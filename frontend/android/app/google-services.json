@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "473754928632",
+    "project_id": "finsight-tracking",
+    "storage_bucket": "finsight-tracking.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473754928632:android:3a527a7c7dfc45c880420d",
+        "android_client_info": {
+          "package_name": "com.finsight.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473754928632-lsrppen2u1vevkfhfps467loq0pqkv8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZzHWGH0GEaP4iGDCK7M2W4YJi1-C8yX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473754928632-lsrppen2u1vevkfhfps467loq0pqkv8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

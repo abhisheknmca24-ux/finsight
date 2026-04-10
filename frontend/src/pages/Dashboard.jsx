@@ -86,7 +86,7 @@ function Dashboard() {
 
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
-  const { transactions: rtTransactions, loading: rtLoading } = useRealtimeTransactions(user?._id || user?.id, 10);
+  const { transactions: rtTransactions } = useRealtimeTransactions(user?._id || user?.id, 10);
 
   const downloadProfessionalReport = async () => {
     try {
@@ -121,7 +121,7 @@ function Dashboard() {
     load();
   }, []);
 
-  if (loading || rtLoading) return <ShimmerDashboard />;
+  if (loading) return <ShimmerDashboard />;
 
   if (error) {
     return (
@@ -263,7 +263,7 @@ function Dashboard() {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="month" />
                     <YAxis tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`} />
-                    <Tooltip content={<CustomTooltip />} />
+                    <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} />
                     <Bar dataKey="spend" name="Spend" fill="url(#barGrad)" radius={[8, 8, 0, 0]} maxBarSize={42} />
                   </BarChart>
                 </ResponsiveContainer>
@@ -358,7 +358,7 @@ function Dashboard() {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
                   <YAxis tickFormatter={(v) => `₹${(v/1000).toFixed(0)}K`} />
-                  <Tooltip content={<CustomTooltip />} />
+                  <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'rgba(255, 255, 255, 0.1)', strokeWidth: 2 }} />
                   <Legend />
                   <Area type="monotone" dataKey="income"  name="Income"  stroke="#2CB67D" fill="url(#gIncome)"  strokeWidth={2} />
                   <Area type="monotone" dataKey="expense" name="Expense" stroke="#f43f5e" fill="url(#gExpense)" strokeWidth={2} />
@@ -369,7 +369,7 @@ function Dashboard() {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
                   <YAxis tickFormatter={(v) => `₹${(v/1000).toFixed(0)}K`} />
-                  <Tooltip content={<CustomTooltip />} />
+                  <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} />
                   <Legend />
                   <Bar dataKey="income"  name="Income"  fill="#2CB67D" radius={[4,4,0,0]} />
                   <Bar dataKey="expense" name="Expense" fill="#f43f5e" radius={[4,4,0,0]} />

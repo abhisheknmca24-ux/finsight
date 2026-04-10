@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import API from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
-import { auth, googleProvider, signInWithPopup } from "../firebase";
+import { auth, signInWithGoogle, isNativePlatform } from "../firebase";
+import { getRedirectResult } from "firebase/auth";
 
 const GoogleIcon = () => (
   <svg viewBox="0 0 48 48" className="google-icon" xmlns="http://www.w3.org/2000/svg">
@@ -17,6 +18,35 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // Handle redirect result when returning from Google Sign-In (Android/Capacitor)
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result && result.user) {
+          setLoading(true);
+          const user = result.user;
+          const res = await API.post("/auth/firebase-login", {
+            email: user.email,
+            name: user.displayName,
+            firebaseUid: user.uid,
+          });
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("user", JSON.stringify(res.data.user));
+          navigate("/dashboard");
+        }
+      } catch (err) {
+        setError(err?.response?.data?.message || err.message || "Google Login failed.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (isNativePlatform()) {
+      handleRedirectResult();
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e?.preventDefault();
@@ -42,9 +72,14 @@ function Login() {
     try {
       setError("");
       setLoading(true);
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
+      const result = await signInWithGoogle();
 
+      // On native platforms, signInWithGoogle triggers redirect — result is null
+      // The redirect result is handled in the useEffect above
+      if (!result) return;
+
+      // On web, we get the result directly from popup
+      const user = result.user;
       const res = await API.post("/auth/firebase-login", {
         email: user.email,
         name: user.displayName,
@@ -162,11 +197,6 @@ function Login() {
             Create one
           </Link>
         </p>
-
-        {/* Demo hint */}
-        <div className="insight-strip mt-16" style={{ justifyContent: "center" }}>
-          Demo: <strong style={{ color: "var(--brand-light)", marginLeft: 4 }}>test@demo.com / Test@1234</strong>
-        </div>
       </div>
     </div>
   );

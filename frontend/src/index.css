@@ -300,8 +300,13 @@ button, .btn, .nav-link, .type-btn, .filter-chip {
   }
 }
 
-/* ── PAGE TRANSITION ─────────────────────────────────────────────────────── */
+/* ── PAGE LAYOUT ─────────────────────────────────────────────────────────── */
 .page-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+  padding: clamp(1.25rem, 2.5vw, 2.5rem);
+  padding-bottom: calc(clamp(1.25rem, 2.5vw, 2.5rem) + env(safe-area-inset-bottom, 0));
   animation: fadeInUp var(--dur-md) var(--ease) both;
 }
 
@@ -330,14 +335,6 @@ button, .btn, .nav-link, .type-btn, .filter-chip {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
-}
-
-.page-wrapper {
-  width: 100%;
-  max-width: 1400px;
-  margin-inline: auto;
-  padding: clamp(1.25rem, 2.5vw, 2.5rem);
-  padding-bottom: calc(clamp(1.25rem, 2.5vw, 2.5rem) + env(safe-area-inset-bottom, 0));
 }
 
 .content-narrow { width: 100%; max-width: 35rem; }
@@ -1571,13 +1568,17 @@ tbody tr:nth-child(10) { animation-delay: 0.20s; }
 /* ── RECHARTS OVERRIDES ──────────────────────────────────────────────────── */
 .recharts-wrapper,
 .recharts-surface { background: transparent !important; }
-.recharts-tooltip-wrapper { outline: none !important; }
+.recharts-tooltip-wrapper { 
+  outline: none !important; 
+  pointer-events: none !important;
+}
 .recharts-default-tooltip {
   background: var(--bg-card) !important;
   border: 1px solid var(--border-subtle) !important;
   border-radius: var(--r-md) !important;
   color: var(--text-primary) !important;
   box-shadow: var(--shadow-md) !important;
+  pointer-events: none !important;
 }
 .recharts-cartesian-grid-horizontal line,
 .recharts-cartesian-grid-vertical line {

@@ -63,6 +63,7 @@ transactionSchema.index(
 // Indexes for pagination and filtering
 transactionSchema.index({ userId: 1, date: -1 });
 transactionSchema.index({ userId: 1, type: 1, date: -1 });
+transactionSchema.index({ userId: 1, type: 1, category: 1 });
 transactionSchema.index({ userId: 1, uploadMonth: 1 });
 
 module.exports = mongoose.model("Transaction", transactionSchema);

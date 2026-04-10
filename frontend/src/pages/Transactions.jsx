@@ -111,13 +111,31 @@ function Transactions() {
   }, [queryType, queryView]);
 
   useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        setLoading(true);
+        const { data } = await API.get("/transactions?limit=1000");
+        setTransactions(data.transactions);
+        setError("");
+      } catch (err) {
+        console.error("API fetch error:", err);
+        // Don't set error yet, maybe Firebase will work
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTransactions();
+  }, []);
+
+  useEffect(() => {
+    // If realtime transactions exist, use them as they represent the live state
     if (!rtLoading) {
       if (rtError) {
-        setError(rtError);
-      } else {
+        console.warn("Firestore real-time sync is unavailable:", rtError);
+        // We don't set the global error here because we might have API data
+      } else if (rtTransactions && rtTransactions.length > 0) {
         setTransactions(rtTransactions);
       }
-      setLoading(false);
     }
   }, [rtTransactions, rtLoading, rtError]);
 
@@ -343,7 +361,7 @@ function Transactions() {
                   tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`} 
                   label={{ value: "Amount", angle: -90, position: "insideLeft", offset: -10, fill: "var(--text-muted)", fontSize: 13, fontWeight: 500 }} 
                 />
-                <Tooltip content={<TrendTooltip />} />
+                <Tooltip content={<TrendTooltip />} cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} />
                 <Bar
                   dataKey="total"
                   radius={[8, 8, 0, 0]}
@@ -393,7 +411,7 @@ function Transactions() {
                     tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`} 
                     label={{ value: "Amount", angle: -90, position: "insideLeft", offset: -10, fill: "var(--text-muted)", fontSize: 13, fontWeight: 500 }} 
                   />
-                  <Tooltip content={<TrendTooltip />} />
+                  <Tooltip content={<TrendTooltip />} cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} />
                   <Bar
                     dataKey="total"
                     fill="#14b8a6"

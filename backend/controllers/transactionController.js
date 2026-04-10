@@ -8,6 +8,7 @@ const {
   updateTransactionInFirestore,
   deleteTransactionFromFirestore,
 } = require("../utils/firestoreSync");
+const { invalidateDashboardCache } = require("../utils/dashboardCache");
 
 // ─── POST /api/transactions ───────────────────────────────────────────────────
 exports.addTransaction = async (req, res) => {
@@ -65,6 +66,7 @@ exports.addTransaction = async (req, res) => {
 
     // Fire-and-forget Firestore sync (never blocks response)
     syncTransactionToFirestore(transaction);
+    invalidateDashboardCache(req.user.id);
 
     res.status(201).json(transaction);
   } catch (err) {
@@ -163,6 +165,7 @@ exports.updateTransaction = async (req, res) => {
 
     // Fire-and-forget Firestore sync
     updateTransactionInFirestore(transaction);
+    invalidateDashboardCache(req.user.id);
 
     res.json(transaction);
   } catch (err) {
@@ -189,6 +192,7 @@ exports.deleteTransaction = async (req, res) => {
 
     // Fire-and-forget Firestore delete
     deleteTransactionFromFirestore(req.user.id, id);
+    invalidateDashboardCache(req.user.id);
 
     res.json({ message: "Transaction deleted successfully", id });
   } catch (err) {

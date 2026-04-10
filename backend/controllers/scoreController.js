@@ -5,7 +5,28 @@ const { getExpenseSeriesValues } = require("../utils/expenseSeries");
 exports.getScore = async (req, res) => {
   try {
     const userId = req.user.id;
-    const allTransactions = await Transaction.find({ userId });
+    const allTransactions = await Transaction.find({ userId }).select("type amount category date").lean();
+
+    if (!allTransactions.length) {
+      return res.json({
+        noData: true,
+        healthScore: 0,
+        status: "No Data",
+        statusColor: "gray",
+        income: 0,
+        expense: 0,
+        investment: 0,
+        savings: 0,
+        savingsRatio: 0,
+        expenseRatio: 0,
+        investmentRatio: 0,
+        anomalies: [],
+        predictedExpense: 0,
+        avgMonthlyExpense: 0,
+        predictionBasis: "monthly_expense_time_series",
+        historyMonthsUsed: 0,
+      });
+    }
 
     const now = new Date();
     const thirtyDaysAgo = new Date();
@@ -54,10 +75,12 @@ exports.getScore = async (req, res) => {
     const unnecessaryRatio = expense > 0 ? (unnecessaryExpense / expense) * 100 : 0;
     
     let spendingScore = 0;
-    if (unnecessaryRatio <= 10) spendingScore = 30;
-    else if (unnecessaryRatio <= 20) spendingScore = 20;
-    else if (unnecessaryRatio <= 30) spendingScore = 10;
-    else spendingScore = 0;
+    if (expense > 0) {
+      if (unnecessaryRatio <= 10) spendingScore = 30;
+      else if (unnecessaryRatio <= 20) spendingScore = 20;
+      else if (unnecessaryRatio <= 30) spendingScore = 10;
+      else spendingScore = 0;
+    }
 
     // ─── 3. Investment Ratio (30 points) ───
     const investmentRatio = income > 0 ? (investment / income) * 100 : 0;
@@ -112,10 +135,12 @@ exports.getScore = async (req, res) => {
 
     res.json({
       healthScore: Math.round(totalScore),
+      noData: false,
       status,
       statusColor,
       income,
       expense,
+      investment,
       savings,
       savingsRatio: parseFloat(savingsRatio.toFixed(1)),
       expenseRatio: parseFloat((income > 0 ? (expense / income) * 100 : 0).toFixed(1)),

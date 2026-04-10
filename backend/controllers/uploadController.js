@@ -6,6 +6,7 @@ const { normalizeCategory } = require("../utils/financialNormalizer");
 const Transaction = require("../models/Transaction");
 const Budget = require("../models/Budget");
 const CategoryRule = require("../models/CategoryRule");
+const { invalidateDashboardCache } = require("../utils/dashboardCache");
 
 // ─── VALID TYPES ──────────────────────────────────────────────────────────────
 const VALID_TYPES = ["income", "expense", "investment"];
@@ -239,6 +240,8 @@ exports.uploadCSV = async (req, res) => {
       budgetsUpdated = (br.upsertedCount || 0) + (br.modifiedCount || 0);
     }
 
+    invalidateDashboardCache(req.user.id);
+
     cleanupFile(filePath);
 
     // ── Category coverage stats ──
@@ -298,6 +301,8 @@ exports.resetAllTransactions = async (req, res) => {
       const budgetResult = await Budget.deleteMany({ userId: req.user.id });
       deletedBudgets = budgetResult.deletedCount || 0;
     }
+
+    invalidateDashboardCache(req.user.id);
 
     res.json({
       message: includeBudgets

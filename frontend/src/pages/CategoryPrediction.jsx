@@ -135,7 +135,7 @@ function CategoryPrediction() {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="category" tick={{ fill: "var(--text-muted)", fontSize: 11 }} />
               <YAxis tickFormatter={(value) => `₹${Number(value / 1000).toFixed(0)}k`} />
-              <Tooltip formatter={(value) => `₹${Number(value).toLocaleString("en-IN")}`} />
+              <Tooltip formatter={(value) => `₹${Number(value).toLocaleString("en-IN")}`} cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} />
               <Bar dataKey="predictedExpense" fill="var(--expense)" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
@@ -163,7 +163,7 @@ function CategoryPrediction() {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
               <YAxis tickFormatter={(value) => `₹${Number(value / 1000).toFixed(0)}k`} />
-              <Tooltip formatter={(value) => value == null ? "-" : `₹${Number(value).toLocaleString("en-IN")}`} />
+              <Tooltip formatter={(value) => value == null ? "-" : `₹${Number(value).toLocaleString("en-IN")}`} cursor={{ stroke: 'rgba(255, 255, 255, 0.1)', strokeWidth: 2 }} />
               <Legend />
               <Line type="monotone" dataKey="actual" stroke="var(--savings)" strokeWidth={3} dot={{ r: 4 }} name="Actual" />
               <Line type="monotone" dataKey="forecast" stroke="var(--investment)" strokeWidth={3} strokeDasharray="5 5" dot={{ r: 5 }} name="Forecast" />

@@ -457,7 +457,7 @@ function MonthlyBudget() {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`} />
-                  <Tooltip formatter={(value) => `₹${Number(value).toFixed(2)}`} />
+                  <Tooltip formatter={(value) => `₹${Number(value).toFixed(2)}`} cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} />
                   <Bar dataKey="value" radius={[8, 8, 0, 0]}>
                     {chartData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />

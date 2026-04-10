@@ -1,5 +1,21 @@
 {
   "appId": "com.finsight.app",
   "appName": "FinSight",
-  "webDir": "dist"
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https",
+    "allowNavigation": [
+      "finsight-faew.onrender.com",
+      "*.firebaseapp.com",
+      "*.googleapis.com"
+    ]
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  },
+  "android": {
+    "allowMixedContent": true
+  }
 }

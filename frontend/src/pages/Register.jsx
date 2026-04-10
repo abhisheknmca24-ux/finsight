@@ -58,7 +58,7 @@ function Register() {
             <input
               className="form-input"
               type="text"
-              placeholder="Abhishek Kumar"
+              placeholder="your name"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               autoComplete="name"

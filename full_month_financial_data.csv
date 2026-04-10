@@ -1,0 +1,72 @@
+date,amount,type,category,description
+2026-03-01,60000,income,salary,Monthly Salary
+
+2026-03-02,200,expense,food,Breakfast
+2026-03-02,500,expense,food,Lunch
+2026-03-02,300,expense,travel,Auto Ride
+
+2026-03-03,1000,expense,shopping,Amazon Purchase
+2026-03-03,200,expense,food,Snacks
+
+2026-03-04,1500,expense,entertainment,Movie
+2026-03-04,300,expense,food,Dinner
+
+2026-03-05,8000,expense,rent,House Rent
+
+2026-03-06,5000,expense,investment,SIP Mutual Fund
+2026-03-06,3000,expense,investment,Stock Investment
+
+2026-03-07,250,expense,food,Breakfast
+2026-03-07,400,expense,food,Lunch
+
+2026-03-08,2000,expense,bills,Electricity Bill
+
+2026-03-09,1000,expense,shopping,Clothes
+
+2026-03-10,300,expense,travel,Uber Ride
+
+2026-03-11,600,expense,food,Dinner
+
+2026-03-12,1500,expense,investment,SIP Mutual Fund
+
+2026-03-13,300,expense,food,Snacks
+
+2026-03-14,1200,expense,entertainment,Concert
+
+2026-03-15,500,expense,food,Lunch
+
+2026-03-16,900,expense,shopping,Grocery
+
+2026-03-17,200,expense,travel,Auto Ride
+
+2026-03-18,1200,expense,bills,Internet Bill
+
+2026-03-19,400,expense,food,Dinner
+
+2026-03-20,700,expense,shopping,Accessories
+
+2026-03-21,300,expense,food,Breakfast
+
+2026-03-22,1000,expense,travel,Train Ticket
+
+2026-03-23,500,expense,food,Lunch
+
+2026-03-24,700,expense,entertainment,Game
+
+2026-03-25,300,expense,food,Dinner
+
+2026-03-26,1500,expense,shopping,Shoes
+
+2026-03-27,400,expense,travel,Taxi
+
+2026-03-28,600,expense,food,Lunch
+
+2026-03-29,800,expense,bills,Water Bill
+
+2026-03-30,300,expense,food,Snacks
+
+2026-03-31,200,expense,travel,Metro
+
+2026-03-15,10000,income,freelance,Freelance Project
+
+2026-03-20,2000,expense,investment,SIP Mutual Fund

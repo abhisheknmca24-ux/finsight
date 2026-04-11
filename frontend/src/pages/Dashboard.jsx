@@ -8,8 +8,8 @@ import API from "../services/api";
 import useRealtimeTransactions from "../hooks/useRealtimeTransactions";
 
 const PIE_COLORS = [
-  "#7F5AF0","#2CB67D","#f43f5e","#f59e0b","#00C2FF",
-  "#8b5cf6","#ec4899","#14b8a6","#f97316","#06b6d4",
+  "#7F5AF0", "#2CB67D", "#f43f5e", "#f59e0b", "#00C2FF",
+  "#8b5cf6", "#ec4899", "#14b8a6", "#f97316", "#06b6d4",
 ];
 
 const fmt = (n) => {
@@ -63,13 +63,13 @@ function ShimmerDashboard() {
       <div className="shimmer shimmer-card mb-32" style={{ height: 140, borderRadius: "var(--r-2xl)" }} />
       {/* Shimmer stat cards */}
       <div className="grid-4 mb-32">
-        {[1,2,3,4].map(i => (
+        {[1, 2, 3, 4].map(i => (
           <div key={i} className="shimmer shimmer-card" />
         ))}
       </div>
       {/* Shimmer charts */}
       <div className="grid-charts">
-        {[1,2].map(i => (
+        {[1, 2].map(i => (
           <div key={i} className="shimmer shimmer-card" style={{ height: 280 }} />
         ))}
       </div>
@@ -140,10 +140,10 @@ function Dashboard() {
 
   // Normalise API response
   const summary = data?.summary ?? data?.totals ?? {};
-  const income      = summary.totalIncome  ?? summary.income  ?? 0;
-  const expense     = summary.totalExpense ?? summary.expense ?? 0;
-  const savings     = summary.savings      ?? income - expense;
-  const investment  = summary.totalInvestment ?? 0;
+  const income = summary.totalIncome ?? summary.income ?? 0;
+  const expense = summary.totalExpense ?? summary.expense ?? 0;
+  const savings = summary.savings ?? income - expense;
+  const investment = summary.totalInvestment ?? 0;
   const savingsRate = summary.savingsRate ?? (income > 0 ? ((savings / income) * 100).toFixed(1) : 0);
 
   const categoryBreakdown = (data?.categoryBreakdown ?? []).map((c) => ({
@@ -223,10 +223,10 @@ function Dashboard() {
 
       {/* Summary cards */}
       <div className="grid-4 mb-32">
-        <StatCard icon="💵" label="Total Income"   value={income}     type="income"  sub={`Savings rate ${savingsRate}%`} to="/transactions?type=income" />
-        <StatCard icon="💸" label="Total Expenses" value={expense}    type="expense" sub="All spending"                   to="/transactions?type=expense" />
-        <StatCard icon="🎯" label="Net Savings"    value={savings}    type="savings" sub="Income minus expenses"          to="/transactions?view=cashflow" />
-        <StatCard icon="📈" label="Investments"    value={investment} type="invest"  sub="Long-term wealth"               to="/transactions?type=investment" />
+        <StatCard icon="💵" label="Total Income" value={income} type="income" sub={`Savings rate ${savingsRate}%`} to="/transactions?type=income" />
+        <StatCard icon="💸" label="Total Expenses" value={expense} type="expense" sub="All spending" to="/transactions?type=expense" />
+        <StatCard icon="🎯" label="Net Savings" value={savings} type="savings" sub="Income minus expenses" to="/transactions?view=cashflow" />
+        <StatCard icon="📈" label="Investments" value={investment} type="invest" sub="Long-term wealth" to="/transactions?type=investment" />
       </div>
 
       {/* Charts */}
@@ -357,10 +357,10 @@ function Dashboard() {
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
-                  <YAxis tickFormatter={(v) => `₹${(v/1000).toFixed(0)}K`} />
+                  <YAxis tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`} />
                   <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'rgba(255, 255, 255, 0.1)', strokeWidth: 2 }} />
                   <Legend />
-                  <Area type="monotone" dataKey="income"  name="Income"  stroke="#2CB67D" fill="url(#gIncome)"  strokeWidth={2} />
+                  <Area type="monotone" dataKey="income" name="Income" stroke="#2CB67D" fill="url(#gIncome)" strokeWidth={2} />
                   <Area type="monotone" dataKey="expense" name="Expense" stroke="#f43f5e" fill="url(#gExpense)" strokeWidth={2} />
                   <Area type="monotone" dataKey="savings" name="Savings" stroke="#00C2FF" fill="url(#gSavings)" strokeWidth={2} />
                 </AreaChart>
@@ -368,12 +368,12 @@ function Dashboard() {
                 <BarChart data={monthlyTrend}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
-                  <YAxis tickFormatter={(v) => `₹${(v/1000).toFixed(0)}K`} />
+                  <YAxis tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`} />
                   <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} />
                   <Legend />
-                  <Bar dataKey="income"  name="Income"  fill="#2CB67D" radius={[4,4,0,0]} />
-                  <Bar dataKey="expense" name="Expense" fill="#f43f5e" radius={[4,4,0,0]} />
-                  <Bar dataKey="savings" name="Savings" fill="#00C2FF" radius={[4,4,0,0]} />
+                  <Bar dataKey="income" name="Income" fill="#2CB67D" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="expense" name="Expense" fill="#f43f5e" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="savings" name="Savings" fill="#00C2FF" radius={[4, 4, 0, 0]} />
                 </BarChart>
               )}
             </ResponsiveContainer>

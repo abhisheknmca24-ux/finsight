@@ -16,8 +16,8 @@ const EXPENSE_CATS = [
   "health", "education", "rent", "emi", "subscriptions",
   "personal_care", "accommodation", "taxes", "charity", "transfer", "other",
 ];
-const INCOME_CATS  = ["salary", "freelance", "income", "investment", "other"];
-const INVEST_CATS  = ["investment", "sip", "stocks", "fd", "other"];
+const INCOME_CATS = ["salary", "freelance", "income", "investment", "other"];
+const INVEST_CATS = ["investment", "sip", "stocks", "fd", "other"];
 
 function AddTransaction() {
   const toast = useToast();
@@ -32,7 +32,7 @@ function AddTransaction() {
 
   const catOptions =
     form.type === "income" ? INCOME_CATS :
-    form.type === "investment" ? INVEST_CATS : EXPENSE_CATS;
+      form.type === "investment" ? INVEST_CATS : EXPENSE_CATS;
 
   const handleSubmit = async (e) => {
     e?.preventDefault();

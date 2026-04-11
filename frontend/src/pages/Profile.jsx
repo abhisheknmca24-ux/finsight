@@ -13,7 +13,7 @@ const Profile = () => {
     gender: "",
     phone: "",
   });
-  
+
   const [securityData, setSecurityData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -77,7 +77,7 @@ const Profile = () => {
 
   const handleSubmitSecurity = async (e) => {
     e.preventDefault();
-    
+
     if (securityData.newPassword !== securityData.confirmPassword) {
       return setMessage({ type: "error", text: "New passwords do not match" });
     }
@@ -110,10 +110,10 @@ const Profile = () => {
   if (loading) {
     return (
       <div style={styles.loadingContainer}>
-        <motion.div 
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-            style={styles.spinner}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+          style={styles.spinner}
         />
         <p>Syncing your financial identity...</p>
       </div>
@@ -122,48 +122,48 @@ const Profile = () => {
 
   return (
     <div style={styles.container}>
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         style={styles.card}
       >
         <div style={styles.header}>
-            <div style={styles.profileInfo}>
-                <div style={styles.avatar}>
-                    {formData.name.charAt(0).toUpperCase()}
-                </div>
-                <div>
-                    <h1 style={styles.title}>{formData.name}</h1>
-                    <p style={styles.emailText}>{formData.email}</p>
-                </div>
+          <div style={styles.profileInfo}>
+            <div style={styles.avatar}>
+              {formData.name.charAt(0).toUpperCase()}
             </div>
-            
-            <div style={styles.tabs}>
-                <button 
-                    onClick={() => { setActiveTab("general"); setMessage({type:"", text:""}); }}
-                    style={{...styles.tabLink, ...(activeTab === "general" ? styles.activeTab : {})}}
-                >
-                    General
-                </button>
-                <button 
-                    onClick={() => { setActiveTab("security"); setMessage({type:"", text:""}); }}
-                    style={{...styles.tabLink, ...(activeTab === "security" ? styles.activeTab : {})}}
-                >
-                    Security
-                </button>
+            <div>
+              <h1 style={styles.title}>{formData.name}</h1>
+              <p style={styles.emailText}>{formData.email}</p>
             </div>
+          </div>
+
+          <div style={styles.tabs}>
+            <button
+              onClick={() => { setActiveTab("general"); setMessage({ type: "", text: "" }); }}
+              style={{ ...styles.tabLink, ...(activeTab === "general" ? styles.activeTab : {}) }}
+            >
+              General
+            </button>
+            <button
+              onClick={() => { setActiveTab("security"); setMessage({ type: "", text: "" }); }}
+              style={{ ...styles.tabLink, ...(activeTab === "security" ? styles.activeTab : {}) }}
+            >
+              Security
+            </button>
+          </div>
         </div>
 
         {message.text && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            style={{ 
-                ...styles.alert, 
-                backgroundColor: message.type === "success" ? "rgba(34, 197, 94, 0.15)" : "rgba(239, 68, 68, 0.15)", 
-                color: message.type === "success" ? "#4ade80" : "#f87171",
-                border: message.type === "success" ? "1px solid rgba(34, 197, 94, 0.2)" : "1px solid rgba(239, 68, 68, 0.2)"
+            style={{
+              ...styles.alert,
+              backgroundColor: message.type === "success" ? "rgba(34, 197, 94, 0.15)" : "rgba(239, 68, 68, 0.15)",
+              color: message.type === "success" ? "#4ade80" : "#f87171",
+              border: message.type === "success" ? "1px solid rgba(34, 197, 94, 0.2)" : "1px solid rgba(239, 68, 68, 0.2)"
             }}
           >
             {message.type === "success" ? "✓ " : "✕ "} {message.text}
@@ -171,138 +171,138 @@ const Profile = () => {
         )}
 
         <AnimatePresence mode="wait">
-            {activeTab === "general" ? (
-                <motion.form 
-                    key="general"
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
-                    onSubmit={handleSubmitProfile} 
-                    style={styles.form}
-                >
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Full Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            placeholder="John Doe"
-                            style={styles.input}
-                            required
-                        />
-                    </div>
+          {activeTab === "general" ? (
+            <motion.form
+              key="general"
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              onSubmit={handleSubmitProfile}
+              style={styles.form}
+            >
+              <div style={styles.inputGroup}>
+                <label style={styles.label}>Full Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="John Doe"
+                  style={styles.input}
+                  required
+                />
+              </div>
 
-                    <div style={styles.row}>
-                        <div style={{ ...styles.inputGroup, flex: 1 }}>
-                        <label style={styles.label}>Date of Birth</label>
-                        <input
-                            type="date"
-                            name="dob"
-                            value={formData.dob}
-                            onChange={handleChange}
-                            style={styles.input}
-                        />
-                        </div>
-                        <div style={{ ...styles.inputGroup, flex: 1 }}>
-                        <label style={styles.label}>Gender</label>
-                        <select
-                            name="gender"
-                            value={formData.gender}
-                            onChange={handleChange}
-                            style={styles.input}
-                        >
-                            <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                        </select>
-                        </div>
-                    </div>
+              <div style={styles.row}>
+                <div style={{ ...styles.inputGroup, flex: 1 }}>
+                  <label style={styles.label}>Date of Birth</label>
+                  <input
+                    type="date"
+                    name="dob"
+                    value={formData.dob}
+                    onChange={handleChange}
+                    style={styles.input}
+                  />
+                </div>
+                <div style={{ ...styles.inputGroup, flex: 1 }}>
+                  <label style={styles.label}>Gender</label>
+                  <select
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    style={styles.input}
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
 
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Phone Number</label>
-                        <input
-                            type="tel"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            placeholder="+1 234 567 890"
-                            style={styles.input}
-                        />
-                    </div>
+              <div style={styles.inputGroup}>
+                <label style={styles.label}>Phone Number</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="+1 234 567 890"
+                  style={styles.input}
+                />
+              </div>
 
-                    <motion.button
-                        whileHover={{ scale: 1.01, backgroundColor: "#3b82f6" }}
-                        whileTap={{ scale: 0.99 }}
-                        type="submit"
-                        disabled={saving}
-                        style={styles.button}
-                    >
-                        {saving ? "Saving Changes..." : "Update Details"}
-                    </motion.button>
-                </motion.form>
-            ) : (
-                <motion.form 
-                    key="security"
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -10 }}
-                    onSubmit={handleSubmitSecurity} 
-                    style={styles.form}
-                >
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Current Password</label>
-                        <input
-                            type="password"
-                            name="currentPassword"
-                            value={securityData.currentPassword}
-                            onChange={handleSecurityChange}
-                            placeholder="••••••••"
-                            style={styles.input}
-                            required
-                        />
-                    </div>
+              <motion.button
+                whileHover={{ scale: 1.01, backgroundColor: "#3b82f6" }}
+                whileTap={{ scale: 0.99 }}
+                type="submit"
+                disabled={saving}
+                style={styles.button}
+              >
+                {saving ? "Saving Changes..." : "Update Details"}
+              </motion.button>
+            </motion.form>
+          ) : (
+            <motion.form
+              key="security"
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              onSubmit={handleSubmitSecurity}
+              style={styles.form}
+            >
+              <div style={styles.inputGroup}>
+                <label style={styles.label}>Current Password</label>
+                <input
+                  type="password"
+                  name="currentPassword"
+                  value={securityData.currentPassword}
+                  onChange={handleSecurityChange}
+                  placeholder="••••••••"
+                  style={styles.input}
+                  required
+                />
+              </div>
 
-                    <div style={styles.divider}></div>
+              <div style={styles.divider}></div>
 
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>New Password</label>
-                        <input
-                            type="password"
-                            name="newPassword"
-                            value={securityData.newPassword}
-                            onChange={handleSecurityChange}
-                            placeholder="••••••••"
-                            style={styles.input}
-                            required
-                        />
-                    </div>
+              <div style={styles.inputGroup}>
+                <label style={styles.label}>New Password</label>
+                <input
+                  type="password"
+                  name="newPassword"
+                  value={securityData.newPassword}
+                  onChange={handleSecurityChange}
+                  placeholder="••••••••"
+                  style={styles.input}
+                  required
+                />
+              </div>
 
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Confirm New Password</label>
-                        <input
-                            type="password"
-                            name="confirmPassword"
-                            value={securityData.confirmPassword}
-                            onChange={handleSecurityChange}
-                            placeholder="••••••••"
-                            style={styles.input}
-                            required
-                        />
-                    </div>
+              <div style={styles.inputGroup}>
+                <label style={styles.label}>Confirm New Password</label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={securityData.confirmPassword}
+                  onChange={handleSecurityChange}
+                  placeholder="••••••••"
+                  style={styles.input}
+                  required
+                />
+              </div>
 
-                    <motion.button
-                        whileHover={{ scale: 1.01, boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)" }}
-                        whileTap={{ scale: 0.99 }}
-                        type="submit"
-                        disabled={saving}
-                        style={{...styles.button, background: "linear-gradient(135deg, #2563eb, #1d4ed8)"}}
-                    >
-                        {saving ? "Updating Password..." : "Change Password"}
-                    </motion.button>
-                </motion.form>
-            )}
+              <motion.button
+                whileHover={{ scale: 1.01, boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)" }}
+                whileTap={{ scale: 0.99 }}
+                type="submit"
+                disabled={saving}
+                style={{ ...styles.button, background: "linear-gradient(135deg, #2563eb, #1d4ed8)" }}
+              >
+                {saving ? "Updating Password..." : "Change Password"}
+              </motion.button>
+            </motion.form>
+          )}
         </AnimatePresence>
       </motion.div>
     </div>
@@ -320,12 +320,12 @@ const styles = {
     fontFamily: "'Outfit', sans-serif",
   },
   loadingContainer: {
-    display: "flex", 
+    display: "flex",
     flexDirection: "column",
-    justifyContent: "center", 
-    alignItems: "center", 
-    height: "100vh", 
-    background: "#080c14", 
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    background: "#080c14",
     color: "#94a3b8",
     gap: "20px"
   },

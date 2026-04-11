@@ -99,15 +99,15 @@ const KEYWORD_MAP = {
     "haldiram", "bikanervala", "wow momo", "biryani blues",
     "paradise biryani", "behrouz", "what the fish",
     "roll house", "sagar ratna", "udupi", "saravana bhavan",
-    "paid to swiggy", "paid to zomato", "restaurant", "cafe", 
-    "dhaba", "food court", "lunch", "dinner", "breakfast", 
+    "paid to swiggy", "paid to zomato", "restaurant", "cafe",
+    "dhaba", "food court", "lunch", "dinner", "breakfast",
     "food delivery", "hotel dining", "barbeque nation"
   ],
 
   // ── FOOD FALLBACK (Needs)
   food: [
-    "canteen", "bakery", "sweet shop", "dairy", "milk booth", 
-    "tiffin", "mess", "snacks", 
+    "canteen", "bakery", "sweet shop", "dairy", "milk booth",
+    "tiffin", "mess", "snacks",
   ],
 
   // ── TRANSPORT
@@ -167,22 +167,22 @@ const KEYWORD_MAP = {
   // ── BILLS & UTILITIES
   // ── BILLS & UTILITIES
   bills: [
-    "electricity bill", "power bill", "bescom", "tpddl", "msedcl", 
+    "electricity bill", "power bill", "bescom", "tpddl", "msedcl",
     "torrent power", "bses", "cesc", "tneb", "wesco", "adani electricity",
     "uppcl", "discoms", "water bill", "bwssb", "jal board", "water supply",
-    "lpg cylinder", "piped gas", "indane gas", "hp gas cylinder", "bharat gas", 
-    "igl gas", "mgl gas", "broadband bill", "airtel fiber", "jio fiber", 
-    "act fibernet", "hathway", "excitel", "spectranet", "postpaid bill", 
-    "mobile bill", "phone bill", "airtel postpaid", "jio postpaid", "vi postpaid", 
+    "lpg cylinder", "piped gas", "indane gas", "hp gas cylinder", "bharat gas",
+    "igl gas", "mgl gas", "broadband bill", "airtel fiber", "jio fiber",
+    "act fibernet", "hathway", "excitel", "spectranet", "postpaid bill",
+    "mobile bill", "phone bill", "airtel postpaid", "jio postpaid", "vi postpaid",
     "bsnl", "tata sky", "tata play", "dish tv", "sun direct", "d2h",
-    "cable tv", "dth recharge", "mobile recharge", "prepaid recharge", 
-    "sim recharge", "wallet recharge", "utility", "bill payment", 
+    "cable tv", "dth recharge", "mobile recharge", "prepaid recharge",
+    "sim recharge", "wallet recharge", "utility", "bill payment",
     "recharge", "electricity", "internet", "broadband", "gas",
     // Tax
     "income tax", "advance tax", "gst payment", "professional tax",
     "property tax", "tds",
     // Education / Medical falls through to core ones later
-    "school fee", "tuition fee", "college fee", "coaching fee", 
+    "school fee", "tuition fee", "college fee", "coaching fee",
     "education fee", "exam fee", "byju", "unacademy", "vedantu",
     "hospital bill", "clinic bill", "lab test", "diagnostic",
     "pharmacy bill", "doctor fee", "consultation fee",
@@ -207,13 +207,13 @@ const KEYWORD_MAP = {
 
   // ── HOBBIES
   hobbies: [
-    "guitar class", "art supplies", "pottery", "decathlon", 
+    "guitar class", "art supplies", "pottery", "decathlon",
     "golf club", "photography", "sports gear", "hobby", "stationery"
   ],
 
   // ── EMERGENCY
   emergency: [
-    "ambulance", "towing service", "emergency repair", 
+    "ambulance", "towing service", "emergency repair",
     "plumber", "laptop repair", "urgent clinical"
   ],
 
@@ -578,13 +578,13 @@ const categorizeAll = async (transactions, mlServiceUrl = process.env.ML_SERVICE
  * @returns {{ total, categorized, uncategorized, rate, breakdown }}
  */
 const getCategoryStats = (categories) => {
-  const total   = categories.length;
+  const total = categories.length;
   const breakdown = {};
   for (const cat of categories) {
     breakdown[cat] = (breakdown[cat] || 0) + 1;
   }
   const uncategorized = breakdown["other"] || 0;
-  const categorized   = total - uncategorized;
+  const categorized = total - uncategorized;
   return {
     total,
     categorized,

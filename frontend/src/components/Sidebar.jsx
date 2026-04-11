@@ -4,24 +4,24 @@ import { useTheme } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
 
 const NAV_ITEMS = [
-  { to: "/dashboard",       icon: "📊", label: "Dashboard" },
-  { to: "/transactions",    icon: "🧾", label: "Transactions" },
-  { to: "/add",             icon: "➕", label: "Add Transaction" },
-  { to: "/upload",          icon: "📤", label: "Upload Statement" },
+  { to: "/dashboard", icon: "📊", label: "Dashboard" },
+  { to: "/transactions", icon: "🧾", label: "Transactions" },
+  { to: "/add", icon: "➕", label: "Add Transaction" },
+  { to: "/upload", icon: "📤", label: "Upload Statement" },
 ];
 
 const NAV_ITEMS_2 = [
-  { to: "/budget",          icon: "💰", label: "Budget" },
-  { to: "/monthly-budget",  icon: "📋", label: "Budget Rule" },
+  { to: "/budget", icon: "💰", label: "Budget" },
+  { to: "/monthly-budget", icon: "📋", label: "Budget Rule" },
 ];
 
 const NAV_ITEMS_3 = [
-  { to: "/prediction",      icon: "⭐", label: "Health Score" },
+  { to: "/prediction", icon: "⭐", label: "Health Score" },
   { to: "/recommendations", icon: "💡", label: "AI Tips" },
 ];
 
 const NAV_ITEMS_4 = [
-  { to: "/profile",         icon: "👤", label: "Profile" },
+  { to: "/profile", icon: "👤", label: "Profile" },
 ];
 
 function Sidebar() {

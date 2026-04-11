@@ -50,8 +50,8 @@ function FAB() {
 }
 
 function CatchAll() {
-    const { token } = useContext(AuthContext);
-    return <Navigate to={token ? "/dashboard" : "/"} replace />;
+  const { token } = useContext(AuthContext);
+  return <Navigate to={token ? "/dashboard" : "/"} replace />;
 }
 
 function App() {
@@ -59,37 +59,37 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <ToastProvider>
-        <BrowserRouter>
-          <div className="app-layout">
-            {/* Fixed Sidebar — hidden on auth pages automatically (no token) */}
-            <Sidebar />
+          <BrowserRouter>
+            <div className="app-layout">
+              {/* Fixed Sidebar — hidden on auth pages automatically (no token) */}
+              <Sidebar />
 
-            {/* Main content area */}
-            <main className="app-content">
-              <Routes>
-                {/* Auth routes — full page, no sidebar */}
-                <Route path="/"         element={<AuthRoute><Login /></AuthRoute>} />
-                <Route path="/register" element={<AuthRoute><Register /></AuthRoute>} />
+              {/* Main content area */}
+              <main className="app-content">
+                <Routes>
+                  {/* Auth routes — full page, no sidebar */}
+                  <Route path="/" element={<AuthRoute><Login /></AuthRoute>} />
+                  <Route path="/register" element={<AuthRoute><Register /></AuthRoute>} />
 
-                {/* Protected routes — inside sidebar layout */}
-                <Route path="/dashboard"       element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                <Route path="/transactions"    element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
-                <Route path="/add"             element={<ProtectedRoute><AddTransaction /></ProtectedRoute>} />
-                <Route path="/budget"          element={<ProtectedRoute><Budget /></ProtectedRoute>} />
-                <Route path="/monthly-budget"  element={<ProtectedRoute><MonthlyBudget /></ProtectedRoute>} />
-                <Route path="/prediction"      element={<ProtectedRoute><Prediction /></ProtectedRoute>} />
-                <Route path="/prediction/categories" element={<ProtectedRoute><CategoryPrediction /></ProtectedRoute>} />
-                <Route path="/recommendations" element={<ProtectedRoute><Recommendations /></ProtectedRoute>} />
-                <Route path="/upload"          element={<ProtectedRoute><Upload /></ProtectedRoute>} />
-                <Route path="/profile"         element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                <Route path="*"                element={<CatchAll />} />
-              </Routes>
-            </main>
+                  {/* Protected routes — inside sidebar layout */}
+                  <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                  <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
+                  <Route path="/add" element={<ProtectedRoute><AddTransaction /></ProtectedRoute>} />
+                  <Route path="/budget" element={<ProtectedRoute><Budget /></ProtectedRoute>} />
+                  <Route path="/monthly-budget" element={<ProtectedRoute><MonthlyBudget /></ProtectedRoute>} />
+                  <Route path="/prediction" element={<ProtectedRoute><Prediction /></ProtectedRoute>} />
+                  <Route path="/prediction/categories" element={<ProtectedRoute><CategoryPrediction /></ProtectedRoute>} />
+                  <Route path="/recommendations" element={<ProtectedRoute><Recommendations /></ProtectedRoute>} />
+                  <Route path="/upload" element={<ProtectedRoute><Upload /></ProtectedRoute>} />
+                  <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                  <Route path="*" element={<CatchAll />} />
+                </Routes>
+              </main>
 
-            {/* FAB */}
-            <FAB />
-          </div>
-        </BrowserRouter>
+              {/* FAB */}
+              <FAB />
+            </div>
+          </BrowserRouter>
         </ToastProvider>
       </AuthProvider>
     </ThemeProvider>

@@ -187,12 +187,12 @@ function Upload() {
                 {/* Stats grid */}
                 <div className="grid-4 mb-24" style={{ gap: 12 }}>
                   {[
-                    { label: "Total Rows",   value: stats.totalRows   ?? 0, color: "var(--text-primary)" },
-                    { label: "Inserted",     value: stats.inserted    ?? 0, color: "var(--income)" },
-                    { label: "Categorised",  value: stats.categorized ?? 0, color: "var(--brand-light)" },
-                    { label: "Duplicates",   value: stats.duplicatesSkipped ?? 0, color: "var(--investment)" },
-                    { label: "Failed",       value: stats.failed ?? stats.errors ?? 0, color: "var(--expense)" },
-                    { label: "Budgets",      value: stats.budgetsUpdated ?? 0, color: "var(--savings)" },
+                    { label: "Total Rows", value: stats.totalRows ?? 0, color: "var(--text-primary)" },
+                    { label: "Inserted", value: stats.inserted ?? 0, color: "var(--income)" },
+                    { label: "Categorised", value: stats.categorized ?? 0, color: "var(--brand-light)" },
+                    { label: "Duplicates", value: stats.duplicatesSkipped ?? 0, color: "var(--investment)" },
+                    { label: "Failed", value: stats.failed ?? stats.errors ?? 0, color: "var(--expense)" },
+                    { label: "Budgets", value: stats.budgetsUpdated ?? 0, color: "var(--savings)" },
                   ].map(({ label, value, color }) => (
                     <div key={label} style={{ background: "var(--bg-input)", padding: "12px 14px", borderRadius: "var(--r-sm)" }}>
                       <p style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 4 }}>{label}</p>

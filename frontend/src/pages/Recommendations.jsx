@@ -2,13 +2,13 @@ import { useEffect, useState, useCallback } from "react";
 import API from "../services/api";
 
 const PRIORITY_STYLES = {
-  critical: { color: "var(--expense)",    bg: "rgba(244,63,94,0.06)",  border: "rgba(244,63,94,0.2)",  label: "🚨 Critical" },
-  high:     { color: "var(--investment)", bg: "rgba(245,158,11,0.06)", border: "rgba(245,158,11,0.2)", label: "⚠️ High" },
-  medium:   { color: "#eab308",           bg: "rgba(234,179,8,0.06)",  border: "rgba(234,179,8,0.2)",  label: "ℹ️ Medium" },
-  low:      { color: "var(--income)",     bg: "rgba(44,182,125,0.06)", border: "rgba(44,182,125,0.2)", label: "✅ Low" },
+  critical: { color: "var(--expense)", bg: "rgba(244,63,94,0.06)", border: "rgba(244,63,94,0.2)", label: "🚨 Critical" },
+  high: { color: "var(--investment)", bg: "rgba(245,158,11,0.06)", border: "rgba(245,158,11,0.2)", label: "⚠️ High" },
+  medium: { color: "#eab308", bg: "rgba(234,179,8,0.06)", border: "rgba(234,179,8,0.2)", label: "ℹ️ Medium" },
+  low: { color: "var(--income)", bg: "rgba(44,182,125,0.06)", border: "rgba(44,182,125,0.2)", label: "✅ Low" },
 };
 
-const COLORS = ["#7F5AF0","#2CB67D","#f43f5e","#f59e0b","#00C2FF","#8b5cf6"];
+const COLORS = ["#7F5AF0", "#2CB67D", "#f43f5e", "#f59e0b", "#00C2FF", "#8b5cf6"];
 
 function Recommendations() {
   const [data, setData] = useState(null);
@@ -80,10 +80,10 @@ function Recommendations() {
       {/* Summary metrics */}
       <div className="grid-auto mb-32">
         {[
-          { label: "Savings Ratio",    value: `${summary?.savingsRatio ?? 0}%`,  color: "var(--income)",      info: `Calculated as: (Total Income - Total Expense - Total Investments) / Total Income\n\n(₹${summary?.income?.toLocaleString("en-IN") || 0} - ₹${summary?.expense?.toLocaleString("en-IN") || 0} - ₹${summary?.investment?.toLocaleString("en-IN") || 0}) / ₹${summary?.income?.toLocaleString("en-IN") || 0} = ${summary?.savingsRatio ?? 0}%\n\nIt tracks the percentage of your monthly income that is retained as unspent, liquid savings.` },
-          { label: "Expense Ratio",    value: `${summary?.expenseRatio ?? 0}%`,  color: "var(--expense)",     info: `Calculated as: Total Expenses / Total Income\n\n₹${summary?.expense?.toLocaleString("en-IN") || 0} / ₹${summary?.income?.toLocaleString("en-IN") || 0} = ${summary?.expenseRatio ?? 0}%\n\nIt measures how much of your total incoming cash is being spent on housing, groceries, bills, shopping, and everyday wants.` },
-          { label: "Investment Ratio", value: `${summary?.investmentRatio ?? 0}%`,color: "var(--investment)",  info: `Calculated as: Total Investments / Total Income\n\n₹${summary?.investment?.toLocaleString("en-IN") || 0} / ₹${summary?.income?.toLocaleString("en-IN") || 0} = ${summary?.investmentRatio ?? 0}%\n\nIt tracks the percentage of your income purposefully allocated directly toward long-term wealth building, such as SIPs or stocks.` },
-          { label: "Budget Categories",value: summary?.budgetCount ?? 0,         color: "var(--brand-light)", info: `The total number of unique categories where you have registered spending or established budget limits this month. You currently have ${summary?.budgetCount ?? 0} active mapped categories.` },
+          { label: "Savings Ratio", value: `${summary?.savingsRatio ?? 0}%`, color: "var(--income)", info: `Calculated as: (Total Income - Total Expense - Total Investments) / Total Income\n\n(₹${summary?.income?.toLocaleString("en-IN") || 0} - ₹${summary?.expense?.toLocaleString("en-IN") || 0} - ₹${summary?.investment?.toLocaleString("en-IN") || 0}) / ₹${summary?.income?.toLocaleString("en-IN") || 0} = ${summary?.savingsRatio ?? 0}%\n\nIt tracks the percentage of your monthly income that is retained as unspent, liquid savings.` },
+          { label: "Expense Ratio", value: `${summary?.expenseRatio ?? 0}%`, color: "var(--expense)", info: `Calculated as: Total Expenses / Total Income\n\n₹${summary?.expense?.toLocaleString("en-IN") || 0} / ₹${summary?.income?.toLocaleString("en-IN") || 0} = ${summary?.expenseRatio ?? 0}%\n\nIt measures how much of your total incoming cash is being spent on housing, groceries, bills, shopping, and everyday wants.` },
+          { label: "Investment Ratio", value: `${summary?.investmentRatio ?? 0}%`, color: "var(--investment)", info: `Calculated as: Total Investments / Total Income\n\n₹${summary?.investment?.toLocaleString("en-IN") || 0} / ₹${summary?.income?.toLocaleString("en-IN") || 0} = ${summary?.investmentRatio ?? 0}%\n\nIt tracks the percentage of your income purposefully allocated directly toward long-term wealth building, such as SIPs or stocks.` },
+          { label: "Budget Categories", value: summary?.budgetCount ?? 0, color: "var(--brand-light)", info: `The total number of unique categories where you have registered spending or established budget limits this month. You currently have ${summary?.budgetCount ?? 0} active mapped categories.` },
         ].map(({ label, value, color, info }, idx) => (
           <div
             key={label}

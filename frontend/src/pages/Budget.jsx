@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import API from "../services/api";
 import { useToast } from "../context/ToastContext";
+import { useTheme } from "../context/ThemeContext";
 
 const CATEGORIES = [
   "rent", "emi", "groceries", "bills", "insurance", 
@@ -60,6 +61,7 @@ function getProgressColor(pct) {
 
 function Budget() {
   const toast = useToast();
+  const { theme } = useTheme();
   const [category, setCategory] = useState("");
   const [limit, setLimit] = useState("");
   const [salary, setSalary] = useState("");
@@ -544,26 +546,45 @@ function Budget() {
           📊 Your Budget Status
         </h2>
         <div style={{ position: "relative", display: "inline-block" }}>
-          <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", borderRight: "1px solid var(--border-color)", paddingRight: 8 }}>🗓️</span>
           <select 
             className="form-select" 
             style={{ 
               width: "auto", 
-              padding: "8px 16px 8px 48px", 
+              minWidth: "160px",
+              padding: "10px 40px 10px 14px", 
               fontSize: 14,
               fontWeight: 600,
-              borderRadius: "12px",
+              borderRadius: "14px",
               cursor: "pointer",
               appearance: "none",
-              backgroundPosition: "right 14px center",
-              border: "1px solid var(--border-color)",
-              backgroundColor: "var(--card-bg, #ffffff)",
+              border: theme === "dark" ? "1px solid rgba(255, 255, 255, 0.1)" : "1px solid rgba(0, 0, 0, 0.1)",
+              backgroundColor: theme === "dark" ? "rgba(15, 23, 42, 0.4)" : "rgba(255, 255, 255, 0.8)",
               color: "var(--text-primary)",
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
-              transition: "all 0.2s ease"
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23${theme === "dark" ? "94a3b8" : "6B7280"}' d='M1 1l5 5 5-5'/%3E%3C/svg%3E")`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "right 12px center",
+              boxShadow: theme === "dark" ? "0 4px 12px rgba(0, 0, 0, 0.2)" : "0 2px 8px rgba(0, 0, 0, 0.06)",
+              transition: "all 0.2s cubic-bezier(0.3, 0, 0.5, 1)"
             }} 
-            onMouseEnter={(e) => e.target.style.transform = "translateY(-1px)"}
-            onMouseLeave={(e) => e.target.style.transform = "translateY(0)"}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = theme === "dark" ? "rgba(30, 41, 59, 0.6)" : "rgba(255, 255, 255, 0.95)";
+              e.target.style.borderColor = theme === "dark" ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.15)";
+              e.target.style.boxShadow = theme === "dark" ? "0 8px 16px rgba(0, 0, 0, 0.3), 0 0 20px rgba(127, 90, 240, 0.1)" : "0 4px 12px rgba(0, 0, 0, 0.08)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = theme === "dark" ? "rgba(15, 23, 42, 0.4)" : "rgba(255, 255, 255, 0.8)";
+              e.target.style.borderColor = theme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)";
+              e.target.style.boxShadow = theme === "dark" ? "0 4px 12px rgba(0, 0, 0, 0.2)" : "0 2px 8px rgba(0, 0, 0, 0.06)";
+            }}
+            onFocus={(e) => {
+              e.target.style.outline = "none";
+              e.target.style.borderColor = theme === "dark" ? "rgba(127, 90, 240, 0.6)" : "rgba(109, 77, 224, 0.5)";
+              e.target.style.boxShadow = theme === "dark" ? "0 0 0 3px rgba(127, 90, 240, 0.15)" : "0 0 0 3px rgba(109, 77, 224, 0.1)";
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = theme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)";
+              e.target.style.boxShadow = theme === "dark" ? "0 4px 12px rgba(0, 0, 0, 0.2)" : "0 2px 8px rgba(0, 0, 0, 0.06)";
+            }}
             value={selectedMonth} 
             onChange={(e) => setSelectedMonth(e.target.value)}
           >

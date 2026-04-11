@@ -61,7 +61,7 @@ exports.getScore = async (req, res) => {
     });
 
     // ─── 1. Savings Ratio (40 points) ───
-    const savings = income - expense;
+    const savings = income - expense - investment;
     const savingsRatio = income > 0 ? (savings / income) * 100 : 0;
     
     let savingsScore = 0;

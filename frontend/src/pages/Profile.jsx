@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 import API from "../services/api";
 
 const Profile = () => {
   const { user, token } = useContext(AuthContext);
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState("general"); // "general" or "security"
   const [formData, setFormData] = useState({
     name: "",
@@ -109,16 +111,18 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div style={styles.loadingContainer}>
+      <div style={getStyles(theme).loadingContainer}>
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-          style={styles.spinner}
+          style={getStyles(theme).spinner}
         />
         <p>Syncing your financial identity...</p>
       </div>
     );
   }
+
+  const styles = getStyles(theme);
 
   return (
     <div style={styles.container}>
@@ -309,160 +313,163 @@ const Profile = () => {
   );
 };
 
-const styles = {
-  container: {
-    minHeight: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "#080c14",
-    padding: "20px",
-    fontFamily: "'Outfit', sans-serif",
-  },
-  loadingContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    background: "#080c14",
-    color: "#94a3b8",
-    gap: "20px"
-  },
-  spinner: {
-    width: "40px",
-    height: "40px",
-    border: "3px solid rgba(59, 130, 246, 0.1)",
-    borderTop: "3px solid #3b82f6",
-    borderRadius: "50%",
-  },
-  card: {
-    background: "rgba(15, 23, 42, 0.6)",
-    backdropFilter: "blur(20px)",
-    border: "1px solid rgba(255, 255, 255, 0.05)",
-    borderRadius: "32px",
-    padding: "48px",
-    maxWidth: "600px",
-    width: "100%",
-    boxShadow: "0 40px 100px -20px rgba(0, 0, 0, 0.8)",
-  },
-  header: {
-    marginBottom: "40px",
-  },
-  profileInfo: {
-    display: "flex",
-    alignItems: "center",
-    gap: "20px",
-    marginBottom: "32px",
-  },
-  avatar: {
-    width: "72px",
-    height: "72px",
-    borderRadius: "20px",
-    background: "linear-gradient(135deg, #60a5fa, #a78bfa)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "2rem",
-    fontWeight: "bold",
-    color: "white",
-    boxShadow: "0 10px 20px -5px rgba(59, 130, 246, 0.5)",
-  },
-  title: {
-    fontSize: "1.8rem",
-    fontWeight: "700",
-    color: "#f8fafc",
-    margin: "0 0 4px 0",
-  },
-  emailText: {
-    color: "#64748b",
-    margin: 0,
-    fontSize: "0.95rem",
-  },
-  tabs: {
-    display: "flex",
-    gap: "10px",
-    background: "rgba(2, 6, 23, 0.4)",
-    padding: "6px",
-    borderRadius: "14px",
-    width: "fit-content",
-  },
-  tabLink: {
-    background: "transparent",
-    border: "none",
-    color: "#94a3b8",
-    padding: "8px 24px",
-    borderRadius: "10px",
-    fontSize: "0.9rem",
-    fontWeight: "600",
-    cursor: "pointer",
-    transition: "all 0.3s ease",
-  },
-  activeTab: {
-    background: "rgba(255, 255, 255, 0.05)",
-    color: "#f8fafc",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "24px",
-  },
-  inputGroup: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "8px",
-  },
-  row: {
-    display: "flex",
-    gap: "24px",
-  },
-  label: {
-    color: "#94a3b8",
-    fontSize: "0.85rem",
-    fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: "0.05em",
-    marginLeft: "4px",
-  },
-  input: {
-    background: "rgba(2, 6, 23, 0.4)",
-    border: "1px solid rgba(255, 255, 255, 0.05)",
-    borderRadius: "16px",
-    padding: "14px 18px",
-    color: "#f8fafc",
-    fontSize: "1rem",
-    outline: "none",
-    transition: "all 0.3s ease",
-  },
-  button: {
-    marginTop: "12px",
-    background: "#2563eb",
-    color: "white",
-    border: "none",
-    borderRadius: "16px",
-    padding: "16px",
-    fontSize: "1rem",
-    fontWeight: "700",
-    cursor: "pointer",
-    transition: "all 0.3s ease",
-    boxShadow: "0 10px 15px -3px rgba(37, 99, 235, 0.3)",
-  },
-  alert: {
-    padding: "16px 20px",
-    borderRadius: "16px",
-    marginBottom: "32px",
-    fontSize: "0.95rem",
-    fontWeight: "500",
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-  },
-  divider: {
-    height: "1px",
-    background: "rgba(255, 255, 255, 0.05)",
-    margin: "8px 0",
-  }
+const getStyles = (theme) => {
+  const isDark = theme === "dark";
+  return {
+    container: {
+      minHeight: "100vh",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      background: isDark ? "#080c14" : "#f5f5f9",
+      padding: "20px",
+      fontFamily: "'Outfit', sans-serif",
+    },
+    loadingContainer: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh",
+      background: isDark ? "#080c14" : "#f5f5f9",
+      color: isDark ? "#94a3b8" : "#6B7280",
+      gap: "20px"
+    },
+    spinner: {
+      width: "40px",
+      height: "40px",
+      border: `3px solid ${isDark ? "rgba(59, 130, 246, 0.1)" : "rgba(109, 77, 224, 0.1)"}`,
+      borderTop: `3px solid ${isDark ? "#3b82f6" : "#6d4de0"}`,
+      borderRadius: "50%",
+    },
+    card: {
+      background: isDark ? "rgba(15, 23, 42, 0.6)" : "rgba(255, 255, 255, 0.9)",
+      backdropFilter: "blur(20px)",
+      border: isDark ? "1px solid rgba(255, 255, 255, 0.05)" : "1px solid rgba(0, 0, 0, 0.06)",
+      borderRadius: "32px",
+      padding: "48px",
+      maxWidth: "600px",
+      width: "100%",
+      boxShadow: isDark ? "0 40px 100px -20px rgba(0, 0, 0, 0.8)" : "0 20px 60px -10px rgba(0, 0, 0, 0.08)",
+    },
+    header: {
+      marginBottom: "40px",
+    },
+    profileInfo: {
+      display: "flex",
+      alignItems: "center",
+      gap: "20px",
+      marginBottom: "32px",
+    },
+    avatar: {
+      width: "72px",
+      height: "72px",
+      borderRadius: "20px",
+      background: "linear-gradient(135deg, #60a5fa, #a78bfa)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "2rem",
+      fontWeight: "bold",
+      color: "white",
+      boxShadow: "0 10px 20px -5px rgba(59, 130, 246, 0.5)",
+    },
+    title: {
+      fontSize: "1.8rem",
+      fontWeight: "700",
+      color: isDark ? "#f8fafc" : "#111827",
+      margin: "0 0 4px 0",
+    },
+    emailText: {
+      color: isDark ? "#64748b" : "#6B7280",
+      margin: 0,
+      fontSize: "0.95rem",
+    },
+    tabs: {
+      display: "flex",
+      gap: "10px",
+      background: isDark ? "rgba(2, 6, 23, 0.4)" : "rgba(0, 0, 0, 0.04)",
+      padding: "6px",
+      borderRadius: "14px",
+      width: "fit-content",
+    },
+    tabLink: {
+      background: "transparent",
+      border: "none",
+      color: isDark ? "#94a3b8" : "#6B7280",
+      padding: "8px 24px",
+      borderRadius: "10px",
+      fontSize: "0.9rem",
+      fontWeight: "600",
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+    },
+    activeTab: {
+      background: isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.06)",
+      color: isDark ? "#f8fafc" : "#111827",
+      boxShadow: isDark ? "0 4px 12px rgba(0,0,0,0.1)" : "0 2px 8px rgba(0,0,0,0.04)",
+    },
+    form: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "24px",
+    },
+    inputGroup: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "8px",
+    },
+    row: {
+      display: "flex",
+      gap: "24px",
+    },
+    label: {
+      color: isDark ? "#94a3b8" : "#6B7280",
+      fontSize: "0.85rem",
+      fontWeight: "600",
+      textTransform: "uppercase",
+      letterSpacing: "0.05em",
+      marginLeft: "4px",
+    },
+    input: {
+      background: isDark ? "rgba(2, 6, 23, 0.4)" : "rgba(0, 0, 0, 0.04)",
+      border: isDark ? "1px solid rgba(255, 255, 255, 0.05)" : "1px solid rgba(0, 0, 0, 0.08)",
+      borderRadius: "16px",
+      padding: "14px 18px",
+      color: isDark ? "#f8fafc" : "#111827",
+      fontSize: "1rem",
+      outline: "none",
+      transition: "all 0.3s ease",
+    },
+    button: {
+      marginTop: "12px",
+      background: "#2563eb",
+      color: "white",
+      border: "none",
+      borderRadius: "16px",
+      padding: "16px",
+      fontSize: "1rem",
+      fontWeight: "700",
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+      boxShadow: "0 10px 15px -3px rgba(37, 99, 235, 0.3)",
+    },
+    alert: {
+      padding: "16px 20px",
+      borderRadius: "16px",
+      marginBottom: "32px",
+      fontSize: "0.95rem",
+      fontWeight: "500",
+      display: "flex",
+      alignItems: "center",
+      gap: "10px",
+    },
+    divider: {
+      height: "1px",
+      background: isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.06)",
+      margin: "8px 0",
+    }
+  };
 };
 
 export default Profile;

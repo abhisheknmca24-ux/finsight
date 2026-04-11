@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
+import API from "../services/api";
 
 const Profile = () => {
   const { user, token } = useContext(AuthContext);
@@ -27,7 +27,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/profile", {
+        const res = await API.get("/auth/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = res.data;
@@ -62,8 +62,8 @@ const Profile = () => {
     setMessage({ type: "", text: "" });
 
     try {
-      await axios.put(
-        "http://localhost:5000/api/auth/profile",
+      await API.put(
+        "/auth/profile",
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -90,8 +90,8 @@ const Profile = () => {
     setMessage({ type: "", text: "" });
 
     try {
-      await axios.put(
-        "http://localhost:5000/api/auth/change-password",
+      await API.put(
+        "/auth/change-password",
         {
           currentPassword: securityData.currentPassword,
           newPassword: securityData.newPassword,

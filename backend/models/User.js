@@ -6,6 +6,9 @@ const userSchema = new mongoose.Schema(
     email: { type: String, unique: true },
     password: String,
     firebaseUid: String,
+    dob: Date,
+    gender: { type: String, enum: ["male", "female", "other"] },
+    phone: String,
   },
   { timestamps: true }
 );

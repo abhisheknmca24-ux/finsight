@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
-import API from "../services/api";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import API from "../services/api";
+import { AuthContext } from "../context/AuthContext";
 import { auth, signInWithGoogle, isNativePlatform } from "../firebase";
 import { getRedirectResult } from "firebase/auth";
 
@@ -18,6 +19,7 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { setUser, setToken } = useContext(AuthContext);
 
   // Handle redirect result when returning from Google Sign-In (Android/Capacitor)
   useEffect(() => {
@@ -32,8 +34,8 @@ function Login() {
             name: user.displayName,
             firebaseUid: user.uid,
           });
-          localStorage.setItem("token", res.data.token);
-          localStorage.setItem("user", JSON.stringify(res.data.user));
+          setToken(res.data.token);
+          setUser(res.data.user);
           navigate("/dashboard");
         }
       } catch (err) {
@@ -58,8 +60,8 @@ function Login() {
     try {
       setLoading(true);
       const res = await API.post("/auth/login", form);
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      setToken(res.data.token);
+      setUser(res.data.user);
       navigate("/dashboard");
     } catch (err) {
       setError(err?.response?.data?.message || "Login failed. Check your credentials.");
@@ -86,8 +88,8 @@ function Login() {
         firebaseUid: user.uid,
       });
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      setToken(res.data.token);
+      setUser(res.data.user);
       navigate("/dashboard");
     } catch (err) {
       setError(err?.response?.data?.message || err.message || "Google Login failed.");

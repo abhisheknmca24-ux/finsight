@@ -1,6 +1,7 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useTheme } from "../context/ThemeContext";
+import { AuthContext } from "../context/AuthContext";
 
 const NAV_ITEMS = [
   { to: "/dashboard",       icon: "📊", label: "Dashboard" },
@@ -19,10 +20,14 @@ const NAV_ITEMS_3 = [
   { to: "/recommendations", icon: "💡", label: "AI Tips" },
 ];
 
+const NAV_ITEMS_4 = [
+  { to: "/profile",         icon: "👤", label: "Profile" },
+];
+
 function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const token = localStorage.getItem("token");
+  const { token, logout } = useContext(AuthContext);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
@@ -31,7 +36,7 @@ function Sidebar() {
   }, [location.pathname]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    logout();
     navigate("/");
   };
 
@@ -86,6 +91,9 @@ function Sidebar() {
 
         <div className="sidebar-section-label">Insights</div>
         {renderLinks(NAV_ITEMS_3)}
+
+        <div className="sidebar-section-label">Account</div>
+        {renderLinks(NAV_ITEMS_4)}
       </nav>
 
       {/* Footer */}

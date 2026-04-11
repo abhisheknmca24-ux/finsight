@@ -1,9 +1,10 @@
 import "./index.css";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, AuthContext } from "./context/AuthContext";
 import { ToastProvider } from "./context/ToastContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import Sidebar from "./components/Sidebar";
+import React, { useContext } from "react";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -16,22 +17,23 @@ import Prediction from "./pages/Prediction";
 import CategoryPrediction from "./pages/CategoryPrediction";
 import Recommendations from "./pages/Recommendations";
 import Upload from "./pages/Upload";
-
-const isAuthenticated = () => !!localStorage.getItem("token");
+import Profile from "./pages/Profile";
 
 function ProtectedRoute({ children }) {
-  return isAuthenticated() ? children : <Navigate to="/" replace />;
+  const { token } = useContext(AuthContext);
+  return token ? children : <Navigate to="/" replace />;
 }
 
 function AuthRoute({ children }) {
-  return isAuthenticated() ? <Navigate to="/dashboard" replace /> : children;
+  const { token } = useContext(AuthContext);
+  return token ? <Navigate to="/dashboard" replace /> : children;
 }
 
 /* Floating Action Button — visible on every authenticated page except /add */
 function FAB() {
   const navigate = useNavigate();
   const location = useLocation();
-  const token = localStorage.getItem("token");
+  const { token } = useContext(AuthContext);
 
   if (!token || location.pathname === "/add") return null;
 
@@ -45,6 +47,11 @@ function FAB() {
       ＋
     </button>
   );
+}
+
+function CatchAll() {
+    const { token } = useContext(AuthContext);
+    return <Navigate to={token ? "/dashboard" : "/"} replace />;
 }
 
 function App() {
@@ -74,7 +81,8 @@ function App() {
                 <Route path="/prediction/categories" element={<ProtectedRoute><CategoryPrediction /></ProtectedRoute>} />
                 <Route path="/recommendations" element={<ProtectedRoute><Recommendations /></ProtectedRoute>} />
                 <Route path="/upload"          element={<ProtectedRoute><Upload /></ProtectedRoute>} />
-                <Route path="*"                element={<Navigate to={isAuthenticated() ? "/dashboard" : "/"} replace />} />
+                <Route path="/profile"         element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                <Route path="*"                element={<CatchAll />} />
               </Routes>
             </main>
 

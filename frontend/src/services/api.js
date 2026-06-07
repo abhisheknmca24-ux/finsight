@@ -14,7 +14,6 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-<<<<<<< HEAD
 // Auto-logout on 401 (expired/invalid token)
 API.interceptors.response.use(
   (res) => res,
@@ -31,6 +30,4 @@ API.interceptors.response.use(
   }
 );
 
-=======
->>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
 export default API;

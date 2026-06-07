@@ -58,7 +58,6 @@ function estimateMonthlyIncome(transactions) {
   return Number(avg.toFixed(2));
 }
 
-<<<<<<< HEAD
 function getMonthlyAverageByType(transactions, type) {
   const totalsByMonth = new Map();
 
@@ -77,14 +76,9 @@ function getMonthlyAverageByType(transactions, type) {
   return Number(avg.toFixed(2));
 }
 
-=======
->>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
 module.exports = {
   aggregateMonthlyExpenseSeries,
   getExpenseSeriesValues,
   estimateMonthlyIncome,
-<<<<<<< HEAD
   getMonthlyAverageByType,
-=======
->>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
 };

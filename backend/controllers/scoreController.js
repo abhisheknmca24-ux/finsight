@@ -1,7 +1,11 @@
 const Transaction = require("../models/Transaction");
 const axios = require("axios");
+<<<<<<< HEAD
 const { getExpenseSeriesValues, getMonthlyAverageByType } = require("../utils/expenseSeries");
 
+=======
+const { getExpenseSeriesValues } = require("../utils/expenseSeries");
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
 
 exports.getScore = async (req, res) => {
   try {
@@ -29,24 +33,52 @@ exports.getScore = async (req, res) => {
       });
     }
 
+<<<<<<< HEAD
     const income = getMonthlyAverageByType(allTransactions, "income");
     const expense = getMonthlyAverageByType(allTransactions, "expense");
     const investment = getMonthlyAverageByType(allTransactions, "investment");
     let unnecessaryExpense = 0;
     let totalExpenseTransactions = 0;
+=======
+    const now = new Date();
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(now.getDate() - 30);
+
+    const currentMonthTx = allTransactions.filter(t => {
+      const d = new Date(t.date);
+      return d >= thirtyDaysAgo && d <= now;
+    });
+
+    let income = 0;
+    let expense = 0;
+    let investment = 0;
+    let unnecessaryExpense = 0;
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
 
     // Anomalies
     const expensesList = [];
     const anomalies = [];
 
+<<<<<<< HEAD
     allTransactions.forEach((t) => {
       if (t.type === "expense") {
         totalExpenseTransactions += t.amount;
+=======
+    currentMonthTx.forEach((t) => {
+      if (t.type === "income") income += t.amount;
+      else if (t.type === "expense") {
+        expense += t.amount;
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
         expensesList.push(t);
         // Treat shopping and entertainment as "unnecessary" for spending control metric
         if (["shopping", "entertainment"].includes(t.category)) {
           unnecessaryExpense += t.amount;
         }
+<<<<<<< HEAD
+=======
+      } else if (t.type === "investment") {
+        investment += t.amount;
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
       }
     });
 
@@ -62,7 +94,11 @@ exports.getScore = async (req, res) => {
 
     // ─── 2. Spending Control (30 points) ───
     // Lower unnecessary expenses -> higher score
+<<<<<<< HEAD
     const unnecessaryRatio = totalExpenseTransactions > 0 ? (unnecessaryExpense / totalExpenseTransactions) * 100 : 0;
+=======
+    const unnecessaryRatio = expense > 0 ? (unnecessaryExpense / expense) * 100 : 0;
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
     
     let spendingScore = 0;
     if (expense > 0) {
@@ -97,7 +133,11 @@ exports.getScore = async (req, res) => {
     // ─── ANOMALY DETECTION ───
     // Detect sudden high expense spikes (abnormal spending compared to average)
     if (expensesList.length > 5) {
+<<<<<<< HEAD
       const avgExpense = totalExpenseTransactions / expensesList.length;
+=======
+      const avgExpense = expense / expensesList.length;
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
       // Define a spike as an expense > 3x the average transaction size AND > 1000
       expensesList.forEach((t) => {
         if (t.amount > avgExpense * 3 && t.amount > 1000) {

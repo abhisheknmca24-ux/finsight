@@ -76,6 +76,7 @@ exports.getBudgetStatus = async (req, res) => {
 
     if (budgetByCategory.size === 0) {
       const userObjectId = new mongoose.Types.ObjectId(req.user.id);
+<<<<<<< HEAD
       const buildFallback = async (dateFilter) => {
         const pipeline = [
           {
@@ -114,6 +115,36 @@ exports.getBudgetStatus = async (req, res) => {
 
       const allTimeFallback = await buildFallback(null);
       return res.json(allTimeFallback);
+=======
+      const unbudgeted = await Transaction.aggregate([
+        {
+          $match: {
+            userId: userObjectId,
+            date: { $gte: startOfMonth, $lte: endOfMonth },
+            type: { $in: ["expense", "investment"] },
+          },
+        },
+        {
+          $group: {
+            _id: { $toLower: { $trim: { input: "$category" } } },
+            total: { $sum: "$amount" },
+          },
+        },
+        { $sort: { total: -1 } },
+      ]);
+
+      const fallback = unbudgeted
+        .filter((row) => row._id)
+        .map((row) => ({
+          category: normalizeCategory(row._id),
+          limit: 0,
+          spent: Number(row.total) || 0,
+          remaining: -(Number(row.total) || 0),
+          isUnbudgeted: true,
+        }));
+
+      return res.json(fallback);
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
     }
 
     for (const b of budgetByCategory.values()) {

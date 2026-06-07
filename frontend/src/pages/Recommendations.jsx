@@ -21,8 +21,13 @@ function Recommendations() {
       setLoading(true);
       const res = await API.get("/recommendations");
       setData(res.data);
+<<<<<<< HEAD
     } catch (err) {
       setError(err?.response?.data?.error || err?.response?.data?.message || "Failed to load recommendations.");
+=======
+    } catch {
+      setError("Failed to load recommendations.");
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
     } finally {
       setLoading(false);
     }
@@ -47,11 +52,15 @@ function Recommendations() {
     );
   }
 
+<<<<<<< HEAD
   if (
     error ||
     data?.noData ||
     ((data?.summary?.totalTransactions || 0) === 0)
   ) {
+=======
+  if (error || !data?.recommendations) {
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
     return (
       <div className="page-wrapper">
         <div className="empty-state">
@@ -75,7 +84,11 @@ function Recommendations() {
         <div>
           <h1 className="page-title">AI Recommendations</h1>
           <p className="page-subtitle">
+<<<<<<< HEAD
             Personalised insights based on {(summary?.totalTransactions ?? summary?.recentTransactions) || 0} transactions
+=======
+            Personalised insights based on {summary?.totalTransactions ?? 0} transactions
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
           </p>
         </div>
         <button className="btn btn-secondary btn-sm" onClick={fetch}>🔄 Refresh</button>

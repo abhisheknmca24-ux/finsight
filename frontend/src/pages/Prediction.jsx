@@ -78,11 +78,19 @@ function Prediction() {
   const monthlyGapValue = predictedExpenseValue - Number(score.avgMonthlyExpense || 0);
 
   const metrics = [
+<<<<<<< HEAD
     { label: "Avg Monthly Income",  value: `₹${Number(score.income || 0).toLocaleString("en-IN")}`,           color: "var(--income)",     info: `Average credited income per month across your saved transaction history.` },
     { label: "Avg Monthly Expense", value: `₹${Number(score.expense || 0).toLocaleString("en-IN")}`,          color: "var(--expense)",    info: `Average debited spending per month across your saved transaction history (excluding investments).` },
     { label: "Avg Monthly Savings", value: `₹${Number(score.savings || 0).toLocaleString("en-IN")}`,          color: "var(--savings)",    info: `Average monthly leftover after deducting expenses and investments.\n\n₹${Number(score.income || 0).toLocaleString("en-IN")} (Income) - ₹${Number(score.expense || 0).toLocaleString("en-IN")} (Expenses) - ₹${Number(score.investment || 0).toLocaleString("en-IN")} (Investments)\n= ₹${Number(score.savings || 0).toLocaleString("en-IN")}` },
     { label: "Savings Ratio",       value: `${score.savingsRatio ?? 0}%`,                                      color: "var(--income)",     info: `Percentage of your average monthly income securely saved or invested.\n\n(₹${Number(score.savings || 0).toLocaleString("en-IN")} / ₹${Number(score.income || 0).toLocaleString("en-IN")}) * 100\n= ${score.savingsRatio ?? 0}%` },
     { label: "Expense Ratio",       value: `${score.expenseRatio ?? 0}%`,                                      color: "var(--expense)",    info: `Percentage of your average monthly income spent on expenses.\n\n(₹${Number(score.expense || 0).toLocaleString("en-IN")} / ₹${Number(score.income || 0).toLocaleString("en-IN")}) * 100\n= ${score.expenseRatio ?? 0}%` },
+=======
+    { label: "Total Income",        value: `₹${Number(score.income || 0).toLocaleString("en-IN")}`,           color: "var(--income)",     info: `Total credited amount classified as income during the selected period.` },
+    { label: "Total Expense",       value: `₹${Number(score.expense || 0).toLocaleString("en-IN")}`,          color: "var(--expense)",    info: `Total debited amount classified as operational/living expenses (excluding investments) during the selected period.` },
+    { label: "Net Savings",         value: `₹${Number(score.savings || 0).toLocaleString("en-IN")}`,          color: "var(--savings)",    info: `Leftover cash after deducting both expenses and investments.\n\n₹${Number(score.income || 0).toLocaleString("en-IN")} (Income) - ₹${Number(score.expense || 0).toLocaleString("en-IN")} (Expenses) - ₹${Number(score.investment || 0).toLocaleString("en-IN")} (Investments)\n= ₹${Number(score.savings || 0).toLocaleString("en-IN")}` },
+    { label: "Savings Ratio",       value: `${score.savingsRatio ?? 0}%`,                                      color: "var(--income)",     info: `Percentage of your income securely saved or invested.\n\n(₹${Number(score.savings || 0).toLocaleString("en-IN")} / ₹${Number(score.income || 0).toLocaleString("en-IN")}) * 100\n= ${score.savingsRatio ?? 0}%` },
+    { label: "Expense Ratio",       value: `${score.expenseRatio ?? 0}%`,                                      color: "var(--expense)",    info: `Percentage of your income burned on expenses.\n\n(₹${Number(score.expense || 0).toLocaleString("en-IN")} / ₹${Number(score.income || 0).toLocaleString("en-IN")}) * 100\n= ${score.expenseRatio ?? 0}%` },
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
     { label: "Avg Monthly Expense", value: `₹${Number(score.avgMonthlyExpense || 0).toLocaleString("en-IN")}`, color: "var(--investment)", info: `Your average historical spending rate per month, used by our machine learning models (Linear Regression & Random Forest) as a baseline to predict future behavior.` },
   ];
 

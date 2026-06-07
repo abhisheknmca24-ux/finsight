@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const fs = require("fs");
 const path = require("path");
 
@@ -6,6 +7,9 @@ require("dotenv").config({
     ? path.join(__dirname, ".env")
     : path.join(__dirname, ".env.example"),
 });
+=======
+require("dotenv").config();
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -32,10 +36,13 @@ app.use("/api/dashboard", require("./routes/dashboardRoutes"));
 app.use("/api/budget", require("./routes/budgetRoutes"));
 app.use("/api/score", require("./routes/scoreRoutes"));
 app.use("/api/recommendations", require("./routes/recommendationRoutes"));
+<<<<<<< HEAD
 // Dev-only debug routes (no auth) — keep disabled in production
 if (process.env.NODE_ENV !== "production") {
   app.use("/api/dev", require("./routes/devRoutes"));
 }
+=======
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6
 app.use("/api/report", require("./routes/reportRoutes"));
 app.use("/api/loan", require("./routes/loanRoutes"));
 
@@ -53,6 +60,12 @@ app.use(notFound);
 app.use(errorHandler);
 
 // Server
+<<<<<<< HEAD
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server running on ${port}`));
+=======
+app.listen(process.env.PORT, () =>
+  console.log(`Server running on ${process.env.PORT}`)
+);
+>>>>>>> 429c3000c8f8f281b7a5e6da5ecb519c26994ba6

@@ -3,7 +3,8 @@
   "appName": "FinSight",
   "webDir": "dist",
   "server": {
-    "androidScheme": "https",
+    "androidScheme": "http",
+    "hostname": "localhost",
     "allowNavigation": [
       "finsight-faew.onrender.com",
       "*.firebaseapp.com",

@@ -1,0 +1,58 @@
+date,amount,type,category,description
+2026-03-01,45000,income,salary,Monthly salary - March
+2026-03-01,5000,investment,sip,Systematic Investment Plan - NIFTY 50
+2026-03-01,3000,investment,gold,Gold SIP - Monthly
+2026-03-02,450,expense,groceries,Weekly groceries shopping
+2026-03-02,150,expense,food,Lunch at office
+2026-03-03,200,expense,transport,Auto/Cab fare daily commute
+2026-03-03,350,expense,food,Dinner with friends
+2026-03-04,120,expense,utilities,Mobile recharge
+2026-03-04,500,expense,shopping,Casual wear from mall
+2026-03-05,180,expense,food,Coffee and snacks
+2026-03-05,2000,investment,stocks,Stock purchase - TCS shares
+2026-03-06,300,expense,entertainment,Movie tickets and popcorn
+2026-03-06,650,expense,groceries,Monthly groceries run
+2026-03-07,200,expense,food,Restaurant lunch
+2026-03-07,1500,expense,shopping,Shoes and accessories
+2026-03-08,250,expense,transport,Monthly metro pass
+2026-03-08,150,expense,utilities,Internet bill
+2026-03-09,400,expense,food,Weekend dinner outing
+2026-03-09,1000,investment,mutual_fund,Balanced Mutual Fund - ICICI
+2026-03-10,180,expense,groceries,Weekly groceries
+2026-03-10,200,expense,food,Office lunch budget
+2026-03-11,300,expense,entertainment,Gaming subscription and apps
+2026-03-12,150,expense,transport,Cab ride to meeting
+2026-03-12,500,expense,shopping,Work accessories and bag
+2026-03-13,200,expense,food,Team lunch with colleagues
+2026-03-13,2500,investment,sip,Systematic Investment Plan - SENSEX
+2026-03-14,400,expense,groceries,Weekly groceries shopping
+2026-03-14,180,expense,utilities,Electricity bill
+2026-03-15,250,expense,food,Dinner celebration
+2026-03-15,800,expense,entertainment,Concert tickets
+2026-03-16,200,expense,food,Lunch
+2026-03-16,100,expense,transport,Daily commute
+2026-03-17,1000,expense,shopping,Electronic gadget
+2026-03-17,500,investment,bonds,Government Bonds - 10-year
+2026-03-18,300,expense,groceries,Fruits and vegetables
+2026-03-18,150,expense,food,Quick coffee and snacks
+2026-03-19,200,expense,food,Office lunch
+2026-03-19,3000,investment,sip,Systematic Investment Plan - GOLD ETF
+2026-03-20,400,expense,food,Dinner with family
+2026-03-20,300,expense,entertainment,Sports event tickets
+2026-03-21,500,expense,groceries,Weekly shopping
+2026-03-21,200,expense,transport,Monthly auto pass
+2026-03-22,150,expense,food,Breakfast out
+2026-03-22,250,expense,utilities,Water and gas bill
+2026-03-23,300,expense,entertainment,Movie and dinner
+2026-03-23,1500,investment,stocks,Stock purchase - INFY shares
+2026-03-24,200,expense,food,Lunch
+2026-03-24,5000,investment,mutual_fund,Large Cap Mutual Fund - HDFC
+2026-03-25,400,expense,groceries,Monthly grocery purchase
+2026-03-25,180,expense,food,Coffee break
+2026-03-26,250,expense,food,Restaurant dinner
+2026-03-26,200,expense,transport,Cab fare
+2026-03-27,300,expense,shopping,Clothing and accessories
+2026-03-27,1000,investment,sip,Systematic Investment Plan - NIFTY NEXT 50
+2026-03-28,200,expense,food,Office lunch
+2026-03-28,150,expense,utilities,Mobile and broadband
+2026-03-28,500,expense,groceries,Final groceries for month

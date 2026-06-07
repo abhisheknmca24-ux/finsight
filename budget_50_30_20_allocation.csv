@@ -1,0 +1,54 @@
+date,amount,type,category,description
+2026-03-01,50000,income,salary,Monthly Salary - Base for 50/30/20 Budget Allocation
+
+2026-03-01,12500,budget,needs-food,50% Needs: Food Budget (30% of Needs = 15% of Salary)
+2026-03-01,5000,budget,needs-transport,50% Needs: Transport Budget (20% of Needs = 10% of Salary)
+2026-03-01,5000,budget,needs-utilities,50% Needs: Utilities Budget (20% of Needs = 10% of Salary)
+2026-03-01,7500,budget,needs-health,50% Needs: Health Budget (30% of Needs = 15% of Salary)
+
+2026-03-01,9000,budget,wants-entertainment,30% Wants: Entertainment Budget (60% of Wants = 18% of Salary)
+2026-03-01,6000,budget,wants-shopping,30% Wants: Shopping Budget (40% of Wants = 12% of Salary)
+
+2026-03-01,5000,budget,savings-emergency,20% Savings: Emergency Fund (50% of Savings = 10% of Salary)
+2026-03-01,3000,budget,savings-investments,20% Savings: Investments (30% of Savings = 6% of Salary)
+2026-03-01,2000,budget,savings-goals,20% Savings: Future Goals (20% of Savings = 4% of Salary)
+
+2026-03-02,1200,expense,needs-food,Groceries for the week
+2026-03-02,800,expense,needs-transport,Monthly transport pass
+2026-03-02,1500,expense,needs-utilities,Electricity and water bill
+2026-03-02,500,expense,needs-health,Medical checkup
+2026-03-03,2000,expense,wants-entertainment,Movie tickets and dinner
+2026-03-03,1500,expense,wants-shopping,New clothes
+2026-03-04,2000,expense,savings-emergency,Emergency fund contribution
+2026-03-04,1500,expense,savings-investments,Mutual fund SIP
+2026-03-04,1000,expense,savings-goals,Vacation fund
+
+2026-03-05,300,expense,needs-food,Daily meals
+2026-03-05,200,expense,needs-transport,Cab fare
+2026-03-06,800,expense,needs-utilities,Internet bill
+2026-03-07,400,expense,needs-health,Medicines
+2026-03-08,1200,expense,wants-entertainment,Concert tickets
+2026-03-09,800,expense,wants-shopping,Online shopping
+2026-03-10,1500,expense,savings-emergency,Additional emergency savings
+2026-03-11,1000,expense,savings-investments,Stock investment
+2026-03-12,500,expense,savings-goals,Education fund
+
+2026-03-15,2500,expense,needs-food,Monthly food supplies
+2026-03-15,1200,expense,needs-transport,Fuel and maintenance
+2026-03-16,2000,expense,needs-utilities,Gas bill
+2026-03-17,2000,expense,needs-health,Dental treatment
+2026-03-18,3000,expense,wants-entertainment,Weekend getaway
+2026-03-19,2000,expense,wants-shopping,Electronics
+2026-03-20,3000,expense,savings-emergency,Emergency fund top-up
+2026-03-21,2000,expense,savings-investments,Bond investment
+2026-03-22,1000,expense,savings-goals,Car fund
+
+2026-03-25,800,expense,needs-food,End of month groceries
+2026-03-25,600,expense,needs-transport,Parking and tolls
+2026-03-26,1200,expense,needs-utilities,Phone bill
+2026-03-27,1000,expense,needs-health,Gym membership
+2026-03-28,1500,expense,wants-entertainment,Restaurant dining
+2026-03-29,1200,expense,wants-shopping,Gifts and miscellaneous
+2026-03-30,2000,expense,savings-emergency,Final emergency contribution
+2026-03-31,1500,expense,savings-investments,Retirement fund
+2026-03-31,500,expense,savings-goals,Wedding fund

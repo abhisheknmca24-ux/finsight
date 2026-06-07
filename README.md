@@ -17,7 +17,7 @@ Use this section as the single source of truth for public links.
 | Frontend (Web) | https://finsight-wheat.vercel.app | Vercel deployment |
 | Backend API (Public) | https://finsight-faew.onrender.com | Used as frontend fallback in src/services/api.js |
 | Backend Health | https://finsight-faew.onrender.com/api/test | Should return status ok |
-| MongoDB (Atlas) | mongodb+srv://<username>:<password>@<cluster-host>/finghit?retryWrites=true&w=majority | Use in backend/.env as MONGO_URI |
+| MongoDB (Atlas) | mongodb+srv://abhishek27077:***@cluster0.zmi8li2.mongodb.net/finghit?retryWrites=true&w=majority&appName=Cluster0 | Use in backend/.env and Render Environment as MONGO_URI |
 
 ## Local Development URLs
 

@@ -7,6 +7,11 @@ import { Link } from "react-router-dom";
 import API from "../services/api";
 import useRealtimeTransactions from "../hooks/useRealtimeTransactions";
 
+const safeJsonParse = (val) => {
+  try { return val ? JSON.parse(val) : null; }
+  catch { return null; }
+};
+
 const PIE_COLORS = [
   "#7F5AF0", "#2CB67D", "#f43f5e", "#f59e0b", "#00C2FF",
   "#8b5cf6", "#ec4899", "#14b8a6", "#f97316", "#06b6d4",
@@ -84,8 +89,7 @@ function Dashboard() {
   const [chartMode, setChartMode] = useState("area");
   const [downloading, setDownloading] = useState(false);
 
-  const storedUser = localStorage.getItem("user");
-  const user = storedUser ? JSON.parse(storedUser) : null;
+  const user = safeJsonParse(localStorage.getItem("user"));
   const { transactions: rtTransactions } = useRealtimeTransactions(user?._id || user?.id, 10);
 
   const downloadProfessionalReport = async () => {
@@ -101,7 +105,7 @@ function Dashboard() {
       link.remove();
     } catch (err) {
       console.error("Error downloading report:", err);
-      alert("Failed to download report. Please try again later.");
+      console.error("Failed to download report. Please try again later.");
     } finally {
       setDownloading(false);
     }

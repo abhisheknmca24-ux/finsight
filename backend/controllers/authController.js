@@ -3,6 +3,16 @@ const User = require("../models/User");
 const generateToken = require("../utils/generateToken");
 const { verifyFirebaseToken, isFirebaseReady } = require("../config/firebase");
 
+const sanitizeUser = (user) => ({
+  id: user._id,
+  name: user.name,
+  email: user.email,
+  dob: user.dob,
+  gender: user.gender,
+  phone: user.phone,
+  firebaseUid: user.firebaseUid,
+});
+
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -21,7 +31,7 @@ exports.register = async (req, res) => {
 
     res.json({
       token: generateToken(user._id),
-      user,
+      user: sanitizeUser(user),
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -32,12 +42,16 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
       res.json({
         token: generateToken(user._id),
-        user,
+        user: sanitizeUser(user),
       });
     } else {
       res.status(400).json({ message: "Invalid credentials" });
@@ -89,7 +103,7 @@ exports.firebaseLogin = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
@@ -116,7 +130,7 @@ exports.updateProfile = async (req, res) => {
     user.phone = phone || user.phone;
 
     const updatedUser = await user.save();
-    res.json(updatedUser);
+    res.json(sanitizeUser(updatedUser));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -125,17 +139,17 @@ exports.updateProfile = async (req, res) => {
 exports.changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: "Current password and new password are required" });
+    }
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: "New password must be at least 6 characters" });
+    }
+
     const user = await User.findById(req.user.id);
 
     if (!user) return res.status(404).json({ message: "User not found" });
-
-    // Check if user is a firebase user (optional check, but good for UX)
-    if (user.password.startsWith("firebase_user_") && !user.password.includes("$2a$")) {
-       // Typically firebase users change password via firebase dashboard/UI
-       // but if we handle it here, we might need to set it for the first time
-    }
-
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
     if (!isMatch) return res.status(400).json({ message: "Incorrect current password" });
 
     user.password = await bcrypt.hash(newPassword, 10);

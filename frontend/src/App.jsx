@@ -1,10 +1,9 @@
-import "./index.css";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
 import { ToastProvider } from "./context/ToastContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import Sidebar from "./components/Sidebar";
-import React, { useContext } from "react";
+import { useContext } from "react";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";

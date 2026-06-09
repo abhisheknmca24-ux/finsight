@@ -497,10 +497,10 @@ function MonthlyBudget() {
                   display: "grid",
                   gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
                   gap: "12px",
-                  background: "var(--card-bg)",
+                  background: "var(--bg-secondary)",
                   padding: "16px",
                   borderRadius: "0 0 var(--r-2xl) var(--r-2xl)",
-                  border: "1px solid var(--border-color)",
+                  border: "1px solid var(--border-subtle)",
                   borderTop: "none",
                 }}>
                   {breakdown.map((item) => (

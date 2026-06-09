@@ -114,7 +114,7 @@ function drawTable(doc, headers, rows) {
   });
 }
 
-function generateProfessionalPDF(data, res) {
+async function generateProfessionalPDF(data, res) {
   const doc = new PDFDocument({ margin: 50, size: 'A4' });
 
   res.setHeader("Content-Type", "application/pdf");
@@ -133,7 +133,6 @@ function generateProfessionalPDF(data, res) {
   const logoPath = require("path").join(__dirname, "../../frontend/public/logo.png");
   if (fs.existsSync(logoPath)) {
     try {
-      // Use 'fit' constraints rather than strict width to ensure no distortion for tall logos
       doc.image(logoPath, (doc.page.width / 2) - 40, doc.y, { fit: [80, 80], align: "center" });
       doc.moveDown(7);
     } catch (e) {
@@ -188,14 +187,12 @@ function generateProfessionalPDF(data, res) {
   drawTable(doc, ["Month", "Income", "Expense"], monthRows);
   doc.moveDown(2);
 
-  generateLineChart(data.monthlyData).then(lineBuffer => {
+  try {
+    const lineBuffer = await generateLineChart(data.monthlyData);
     if (doc.y > doc.page.height - 300) doc.addPage();
     doc.image(lineBuffer, { width: 400, align: 'center' });
     doc.moveDown(2);
 
-    // ==============================
-    // 🔵 CATEGORY TABLE & PIE CHART
-    // ==============================
     doc.addPage();
     drawSectionHeader("Category Breakdown");
 
@@ -206,52 +203,42 @@ function generateProfessionalPDF(data, res) {
     drawTable(doc, ["Category", "Amount"], categoryRows);
     doc.moveDown(2);
 
-    generatePieChart(data.categoryTotals).then(pieBuffer => {
-      if (doc.y > doc.page.height - 300) doc.addPage();
-      doc.image(pieBuffer, { width: 400, align: 'center' });
-      doc.moveDown(2);
+    const pieBuffer = await generatePieChart(data.categoryTotals);
+    if (doc.y > doc.page.height - 300) doc.addPage();
+    doc.image(pieBuffer, { width: 400, align: 'center' });
+    doc.moveDown(2);
 
-      // ==============================
-      // 📊 TRANSACTION TABLE (TOP 10)
-      // ==============================
-      doc.addPage();
-      drawSectionHeader("Recent Transactions");
+    doc.addPage();
+    drawSectionHeader("Recent Transactions");
 
-      const txnRows = data.transactions.slice(0, 15).map(t => [
-        new Date(t.date).toLocaleDateString("en-IN"),
-        t.category ? t.category.charAt(0).toUpperCase() + t.category.slice(1) : "Other",
-        `${t.type === 'income' ? '+' : '-'}₹${t.amount.toLocaleString()}`
-      ]);
+    const txnRows = data.transactions.slice(0, 15).map(t => [
+      new Date(t.date).toLocaleDateString("en-IN"),
+      t.category ? t.category.charAt(0).toUpperCase() + t.category.slice(1) : "Other",
+      `${t.type === 'income' ? '+' : '-'}₹${t.amount.toLocaleString()}`
+    ]);
 
-      drawTable(doc, ["Date", "Category", "Amount"], txnRows);
-      doc.moveDown(2);
+    drawTable(doc, ["Date", "Category", "Amount"], txnRows);
+    doc.moveDown(2);
 
-      // ==============================
-      // 🧠 RECOMMENDATIONS
-      // ==============================
-      if (doc.y > doc.page.height - 200) doc.addPage();
-      drawSectionHeader("Recommendations");
+    if (doc.y > doc.page.height - 200) doc.addPage();
+    drawSectionHeader("Recommendations");
 
-      doc.fontSize(12).font('Helvetica');
-      data.recommendations.forEach(rec => {
-        doc.text(`• ${rec}`);
-        doc.moveDown(0.7);
-      });
-
-      doc.end();
-    }).catch(err => {
-      console.error(err);
-      doc.end();
+    doc.fontSize(12).font('Helvetica');
+    data.recommendations.forEach(rec => {
+      doc.text(`• ${rec}`);
+      doc.moveDown(0.7);
     });
-  }).catch(err => {
-    console.error(err);
+
     doc.end();
-  });
+  } catch (err) {
+    console.error("Error generating PDF report:", err);
+    doc.end();
+  }
 }
 
 exports.generateReport = async (req, res) => {
   try {
-    const userId = req.user.id || req.user._id;
+    const userId = req.user.id;
 
     if (!userId) {
       return res.status(401).json({ error: "User unauthorized" });

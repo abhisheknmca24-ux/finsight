@@ -1,9 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
-import { auth, signInWithGoogle, isNativePlatform } from "../firebase";
-import { getRedirectResult } from "firebase/auth";
+import { signInWithGoogle } from "../firebase";
 
 const GoogleIcon = () => (
   <svg viewBox="0 0 48 48" className="google-icon" xmlns="http://www.w3.org/2000/svg">
@@ -20,35 +19,6 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setUser, setToken } = useContext(AuthContext);
-
-  // Handle redirect result when returning from Google Sign-In (Android/Capacitor)
-  useEffect(() => {
-    const handleRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth);
-        if (result && result.user) {
-          setLoading(true);
-          const user = result.user;
-          const res = await API.post("/auth/firebase-login", {
-            email: user.email,
-            name: user.displayName,
-            firebaseUid: user.uid,
-          });
-          setToken(res.data.token);
-          setUser(res.data.user);
-          navigate("/dashboard");
-        }
-      } catch (err) {
-        setError(err?.response?.data?.message || err.message || "Google Login failed.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (isNativePlatform()) {
-      handleRedirectResult();
-    }
-  }, [navigate]);
 
   const handleLogin = async (e) => {
     e?.preventDefault();
@@ -76,11 +46,10 @@ function Login() {
       setLoading(true);
       const result = await signInWithGoogle();
 
-      // On native platforms, signInWithGoogle triggers redirect — result is null
-      // The redirect result is handled in the useEffect above
-      if (!result) return;
+      if (!result || !result.user) {
+        throw new Error("Google Sign-In failed to return user data.");
+      }
 
-      // On web, we get the result directly from popup
       const user = result.user;
       const res = await API.post("/auth/firebase-login", {
         email: user.email,
@@ -92,6 +61,7 @@ function Login() {
       setUser(res.data.user);
       navigate("/dashboard");
     } catch (err) {
+      console.error("Google Login Error:", err);
       setError(err?.response?.data?.message || err.message || "Google Login failed.");
     } finally {
       setLoading(false);

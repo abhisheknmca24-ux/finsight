@@ -49,16 +49,20 @@ router.post("/", auth, async (req, res) => {
   try {
     const { amount, category, description, date } = req.body;
     
-    const expense = new Transaction({
-      userId: req.user.id,
-      amount,
-      type: "expense",
-      category,
-      description,
-      date: date || new Date()
-    });
+    if (!amount || Number(amount) <= 0) {
+      return res.status(400).json({ message: "Valid amount is required" });
+    }
     
-    await expense.save();
+    const expense = await Transaction.create({
+      userId: req.user.id,
+      amount: Number(amount),
+      type: "expense",
+      category: category || "other",
+      description: description || "",
+      date: date || new Date(),
+      uploadDate: new Date(),
+      source: "manual",
+    });
     
     // Fire-and-forget Firestore sync
     syncTransactionToFirestore(expense);

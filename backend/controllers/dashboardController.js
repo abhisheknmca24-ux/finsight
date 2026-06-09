@@ -165,7 +165,7 @@ exports.getDashboard = async (req, res) => {
       try {
         const predictionRes = await axios.post(`${process.env.ML_SERVICE_URL}/predict`, {
           values: monthlyExpenseValues,
-        }, { timeout: 1200 });
+        }, { timeout: 5000 });
 
         aiForecast = {
           nextMonthExpense: Number(predictionRes.data.prediction || 0),

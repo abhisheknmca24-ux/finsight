@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
@@ -323,7 +323,7 @@ const getStyles = (theme) => {
       alignItems: "center",
       background: isDark ? "#080c14" : "#f5f5f9",
       padding: "20px",
-      fontFamily: "'Outfit', sans-serif",
+      fontFamily: "'Inter', sans-serif",
     },
     loadingContainer: {
       display: "flex",

@@ -123,7 +123,7 @@ exports.getBudgetStatus = async (req, res) => {
             userId: b.userId,
             date: { $gte: startOfMonth, $lte: endOfMonth },
             type: { $in: ["expense", "investment"] }, // Count both towards budgets
-            category: { $regex: `^${b.category}$`, $options: "i" }, // Case-insensitive match
+            category: { $regex: `^${b.category.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`, $options: "i" },
           },
         },
         { $group: { _id: null, total: { $sum: "$amount" } } },

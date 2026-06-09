@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:5000" : "https://finsight-faew.onrender.com");
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const API = axios.create({
   baseURL: `${API_URL}/api`,
@@ -21,7 +21,7 @@ API.interceptors.response.use(
     if (error?.response?.status === 401) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      // Only redirect if not already on auth pages
+      window.dispatchEvent(new Event("auth-logout"));
       if (!window.location.pathname.startsWith("/login") && !window.location.pathname.startsWith("/register")) {
         window.location.href = "/login";
       }

@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signInWithEmailAndPassword, signInWithCredential } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { Capacitor } from "@capacitor/core";
+import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAa8bYmBq8z_eqiYLMHrm305UzZjRgUvYU",
@@ -27,10 +28,14 @@ export const isNativePlatform = () => Capacitor.isNativePlatform();
 
 export const signInWithGoogle = async () => {
   if (isNativePlatform()) {
-    // On native platforms, use redirect flow
-    await signInWithRedirect(auth, googleProvider);
-    // Result is handled in getRedirectResult after the page reloads
-    return null;
+    // On native platforms, use the native Google Sign-In plugin
+    const result = await FirebaseAuthentication.signInWithGoogle();
+
+    // Create a Firebase credential from the native idToken
+    const credential = GoogleAuthProvider.credential(result.credential.idToken);
+
+    // Sign in to Firebase with the credential
+    return await signInWithCredential(auth, credential);
   } else {
     // On web, popup works fine
     return await signInWithPopup(auth, googleProvider);

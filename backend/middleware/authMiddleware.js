@@ -7,13 +7,16 @@ const { verifyFirebaseToken, isFirebaseReady } = require("../config/firebase");
  * 2. Falls back to Firebase ID token verification (Google Sign-In flow)
  */
 module.exports = async (req, res, next) => {
-  let token = req.headers.authorization;
+  const authHeader = req.headers.authorization;
 
-  if (!token || !token.startsWith("Bearer")) {
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ message: "No token" });
   }
 
-  token = token.split(" ")[1];
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "No token" });
+  }
 
   // ── Try JWT first (primary auth method) ─────────────────────────────
   try {
@@ -28,7 +31,6 @@ module.exports = async (req, res, next) => {
   if (isFirebaseReady()) {
     const decoded = await verifyFirebaseToken(token);
     if (decoded) {
-      // Map Firebase token claims to the same shape as JWT
       req.user = {
         id: decoded.uid,
         email: decoded.email,

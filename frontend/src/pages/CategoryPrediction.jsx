@@ -191,7 +191,7 @@ function CategoryPrediction() {
 
               <div style={{ marginTop: 12, fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.7 }}>
                 <div>Growth pattern: <strong>₹{Number(item.averageGrowth || 0).toLocaleString("en-IN")}</strong> per month</div>
-                <div>Pattern type: <strong>{item.patternType.replaceAll("_", " ")}</strong></div>
+                <div>Pattern type: <strong>{(item.patternType || "").replaceAll("_", " ")}</strong></div>
                 <div>Model: <strong>{item.model}</strong> | Confidence: <strong>{item.confidence}</strong></div>
               </div>
 

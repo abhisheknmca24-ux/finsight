@@ -13,6 +13,12 @@ import {
 import API from "../services/api";
 
 import useRealtimeTransactions from "../hooks/useRealtimeTransactions";
+import { useToast } from "../context/ToastContext";
+
+const safeJsonParse = (val) => {
+  try { return val ? JSON.parse(val) : null; }
+  catch { return null; }
+};
 
 const FILTERS = [
   { key: "all", label: "All" },
@@ -63,6 +69,7 @@ const TrendTooltip = ({ active, payload, label }) => {
 };
 
 function Transactions() {
+  const toast = useToast();
   const [searchParams, setSearchParams] = useSearchParams();
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -75,8 +82,7 @@ function Transactions() {
   const [ruleCategory, setRuleCategory] = useState("food");
   const [isAddingRule, setIsAddingRule] = useState(false);
 
-  const storedUser = localStorage.getItem("user");
-  const user = storedUser ? JSON.parse(storedUser) : null;
+  const user = safeJsonParse(localStorage.getItem("user"));
   const { transactions: rtTransactions, loading: rtLoading, error: rtError } = useRealtimeTransactions(user?._id || user?.id, 2000);
 
   const handleAddRule = async () => {
@@ -87,7 +93,7 @@ function Transactions() {
       setRuleKeyword("");
       window.dispatchEvent(new Event("finghitBudgetUpdated"));
     } catch (err) {
-      alert(err?.response?.data?.message || err.message);
+      toast(err?.response?.data?.message || err.message, "error");
     } finally {
       setIsAddingRule(false);
     }
@@ -118,8 +124,7 @@ function Transactions() {
         setTransactions(data.transactions);
         setError("");
       } catch (err) {
-        console.error("API fetch error:", err);
-        // Don't set error yet, maybe Firebase will work
+        setError("Failed to load transactions");
       } finally {
         setLoading(false);
       }
@@ -128,16 +133,10 @@ function Transactions() {
   }, []);
 
   useEffect(() => {
-    // If realtime transactions exist, use them as they represent the live state
-    if (!rtLoading) {
-      if (rtError) {
-        console.warn("Firestore real-time sync is unavailable:", rtError);
-        // We don't set the global error here because we might have API data
-      } else if (rtTransactions && rtTransactions.length > 0) {
-        setTransactions(rtTransactions);
-      }
+    if (!rtLoading && rtError && !error && transactions.length === 0) {
+      // Only show toast if API also failed
     }
-  }, [rtTransactions, rtLoading, rtError]);
+  }, [rtTransactions, rtLoading, rtError, error, transactions.length]);
 
   const visibleTransactions = useMemo(() => {
     if (activeView === "cashflow") {

@@ -136,8 +136,8 @@ function Budget() {
         return true;
       });
       setData(deduped);
-    } catch {
-      // silent
+    } catch (err) {
+      toast(err?.response?.data?.message || "Failed to load budgets.", "error");
     } finally {
       setLoading(false);
     }
@@ -149,8 +149,11 @@ function Budget() {
     }
     const refresh = () => { if (selectedMonth) fetchData(); };
     window.addEventListener("finghitBudgetUpdated", refresh);
-    window.addEventListener("storage", (e) => e.key === "finghitBudgetUpdate" && refresh());
-    return () => window.removeEventListener("finghitBudgetUpdated", refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      window.removeEventListener("finghitBudgetUpdated", refresh);
+      window.removeEventListener("storage", refresh);
+    };
   }, [fetchData, selectedMonth]);
 
   const setBudget = async (e) => {

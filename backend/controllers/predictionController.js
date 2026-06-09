@@ -52,7 +52,7 @@ exports.predictExpense = async (req, res) => {
 
     const aiRes = await axios.post(`${process.env.ML_SERVICE_URL}/predict`, {
       values,
-    });
+    }, { timeout: 5000 });
 
     res.json({
       ...aiRes.data,
@@ -82,7 +82,7 @@ exports.predictYearEnd = async (req, res) => {
     const aiRes = await axios.post(`${process.env.ML_SERVICE_URL}/predict-yearend`, {
       values,
       income: monthlyIncome,
-    });
+    }, { timeout: 5000 });
 
     res.json({
       ...aiRes.data,
@@ -159,7 +159,7 @@ exports.predictCategoryWise = async (req, res) => {
 
       if (values.length >= 2) {
         try {
-          const aiRes = await axios.post(`${process.env.ML_SERVICE_URL}/predict`, { values });
+          const aiRes = await axios.post(`${process.env.ML_SERVICE_URL}/predict`, { values }, { timeout: 5000 });
           predictedExpense = Number(aiRes.data.prediction || predictedExpense);
           confidence = aiRes.data.confidence || confidence;
           model = aiRes.data.model || model;

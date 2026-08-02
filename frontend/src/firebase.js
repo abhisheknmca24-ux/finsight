@@ -5,13 +5,13 @@ import { Capacitor } from "@capacitor/core";
 import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAa8bYmBq8z_eqiYLMHrm305UzZjRgUvYU",
-  authDomain: "finsight-tracking.firebaseapp.com",
-  projectId: "finsight-tracking",
-  storageBucket: "finsight-tracking.firebasestorage.app",
-  messagingSenderId: "473754928632",
-  appId: "1:473754928632:web:1d60ce1d25832dbd80420d",
-  measurementId: "G-HTC54J0F3N"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
